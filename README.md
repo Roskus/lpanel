@@ -6,7 +6,7 @@ Open Source Online web hosting panel based in laravel
 
 * Virtual Host administration
 * Database administration
-* Linux User adminitration
+* Linux user administration
 
 ## Commands
 
@@ -25,7 +25,13 @@ php artisan database:create domain_data
 ### Create a database user
 
 ```terminal
-php artisan database:create-user
+php artisan database:user-create
+```
+
+### Create a linux user
+
+```terminal
+php artisan linux:user-create
 ```
 
 ## Tests

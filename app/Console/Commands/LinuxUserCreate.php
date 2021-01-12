@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DatabaseCreate extends Command
+class LinuxUserCreate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'database:create {name} {--engine=mysql}';
+    protected $signature = 'linux:user-create';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a database in the server. Receive a name. Optional --engine by default is MariaDB/MySQL';
+    protected $description = 'Create a linux user and home folder.';
 
     /**
      * Create a new command instance.
