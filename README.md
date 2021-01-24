@@ -1,11 +1,15 @@
 # Larahpanel: Lara Host Panel
 
-Open Source Online web hosting panel based in laravel
+Open Source web hosting panel based in laravel
 
 ## Features
 
 * Virtual Host administration
+    * Nginx
+    * Apache
 * Database administration
+    * MariaDB / MySQL
+    * Postgres
 * Linux user administration
 
 ## Commands
@@ -39,3 +43,9 @@ Run tests
 ```terminal
 php artisan test
 ```
+
+## Made with ❤️
+
+Design based in StartBootstrap
+
+https://github.com/startbootstrap/startbootstrap-sb-admin-2
