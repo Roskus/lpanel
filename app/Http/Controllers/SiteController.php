@@ -38,6 +38,7 @@ class SiteController extends MainController
             $website = Website::find($request->id);
         }
         $website->url = $request->url;
+        $website->type = $request->type;
         $website->updated_at = now();
         $website->save();
         return redirect('/site');

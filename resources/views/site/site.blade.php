@@ -10,7 +10,7 @@
     <div class="row">
         <form method="post" action="/site/save" class="form">
         @csrf
-        <input type="hidden" name="id" value="">
+        <input type="hidden" name="id" value="{{ $website->id }}">
         <div class="form-group row">
             <div class="col">
                 <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-contol">
@@ -20,8 +20,8 @@
             <div class="col">
                 <select name="type" required="requied" class="form-control">
                     <option value="">Type</option>
-                    <option value="nginx">Nginx</option>
-                    <option value="apache">Apache</option>
+                    <option value="nginx" @if ($website->type == 'nginx') selected="selected" @endif>Nginx</option>
+                    <option value="apache" @if ($website->type == 'apache') selected="selected" @endif>Apache</option>
                 </select>
             </div>
         </div>

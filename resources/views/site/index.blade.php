@@ -34,7 +34,9 @@
                         @if (!@empty($websites))
                             @foreach ($websites as $site)
                             <tr>
-                                <td>{{ $site->url }}</td>
+                                <td>
+                                    <a href="/site/edit/{{ $site->id }}">{{ $site->url }}</a>
+                                </td>
                                 <td>{{ $site->type }}</td>
                                 <td>{{ $site->status }}</td>
                                 <td>{{ $site->created_at->format('d/m/Y') }}</td>
