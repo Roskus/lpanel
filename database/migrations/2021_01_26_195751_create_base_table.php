@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTable extends Migration
+class CreateBaseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('base', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['MariaDB', 'Postgres']);
             $table->string('name');
-            $table->string('email', 254)->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('user', 20);
+            $table->string('password', 190);
             $table->unsignedTinyInteger('status')->default(1);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('base');
     }
 }

@@ -26,3 +26,19 @@ Route::get('/site', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/site/add', [App\Http\Controllers\SiteController::class, 'add']);
 Route::get('/site/edit/{id}', [App\Http\Controllers\SiteController::class, 'edit']);
 Route::post('/site/save', [App\Http\Controllers\SiteController::class, 'save']);
+
+// Profile
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'detail']);
+Route::post('/profile/save', [App\Http\Controllers\ProfileController::class, 'save']);
+
+// User
+Route::get('/user', [App\Http\Controllers\UserController::class, 'index']);
+Route::get('/user/add', [App\Http\Controllers\UserController::class, 'add']);
+Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+Route::post('/user/save', [App\Http\Controllers\UserController::class, 'save']);
+
+// Database
+Route::get('/database', [App\Http\Controllers\DatabaseController::class, 'index']);
+Route::get('/database/add', [App\Http\Controllers\DatabaseController::class, 'add']);
+Route::get('/database/edit/{id}', [App\Http\Controllers\DatabaseController::class, 'edit']);
+Route::post('/database/save', [App\Http\Controllers\DatabaseController::class, 'save']);

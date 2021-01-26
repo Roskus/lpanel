@@ -35,7 +35,7 @@
             @include('sidebar')
         </div>
         @endauth
-        <div class="col py-4">
+        <div class="col-10 py-4">
             @yield('content')
             @if(Route::current()->getName() != 'login')
             <!-- Footer -->

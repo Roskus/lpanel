@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    const ACTIVE = 1;
     protected $table = 'user';
 
     /**
