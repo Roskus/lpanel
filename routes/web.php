@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes([
-    'register' => true, // Registration Routes...
+    'register' => (env('APP_ENV') != 'production') ? true : false, // Registration Routes...
 ]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');

@@ -11,7 +11,7 @@ class DatabaseCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'database:create {name} {--engine=mysql}';
+    protected $signature = 'database:create {name} {engine=mysql}';
 
     /**
      * The console command description.

@@ -14,10 +14,15 @@ Open Source web hosting panel based in laravel
 
 ## Commands
 
-### Create a website virtual host by default create a nginx website.
+### Create a website virtual host by default create a nginx virtualhost.
 
 ```terminal
 php artisan website:create domain.com
+```
+
+### Create a website virtual host with apache virtualhost.
+```terminal
+php artisan database:create domain_data server=apache
 ```
 
 ### Create a database
