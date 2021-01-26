@@ -15,8 +15,10 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Earnings (Monthly)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                    <div class="h6">Server: {{ $webserver_name }}</div>
+                                    <div class="h6">PHP: {{ $php_version }}</div>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Uptime: {{ $server_uptime }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-server fa-2x text-gray-300"></i>
@@ -32,11 +34,11 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Websites (Active)</div>
+                                <div class="h6 font-weight-bold text-success text-uppercase mb-1">Websites</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $website_count }}</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-sitemap fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>

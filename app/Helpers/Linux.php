@@ -14,6 +14,17 @@ use Symfony\Component\Process\Process;
 class Linux
 {
 
+    public static function getUptime()
+    {
+        $str   = @file_get_contents('/proc/uptime');
+        $num   = floatval($str);
+        $secs  = fmod($num, 60); $num = intdiv($num, 60);
+        $mins  = $num % 60;      $num = intdiv($num, 60);
+        $hours = $num % 24;      $num = intdiv($num, 24);
+        $days  = $num;
+        return sprintf("%03d:%02d:%02d:%02d", $days, $hours, $mins, $secs);
+    }
+
     /**
      * Add Linux user to the system
      *
