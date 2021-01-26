@@ -20,3 +20,9 @@ Auth::routes([
 ]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+// Website
+Route::get('/site', [App\Http\Controllers\SiteController::class, 'index']);
+Route::get('/site/add', [App\Http\Controllers\SiteController::class, 'add']);
+Route::get('/site/edit/{id}', [App\Http\Controllers\SiteController::class, 'edit']);
+Route::post('/site/save', [App\Http\Controllers\SiteController::class, 'save']);

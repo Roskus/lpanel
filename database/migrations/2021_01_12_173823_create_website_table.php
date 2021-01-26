@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWebsitesTable extends Migration
+class CreateWebsiteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateWebsitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('websites', function (Blueprint $table) {
+        Schema::create('website', function (Blueprint $table) {
             $table->id();
+            $table->string('url', 255);
+            $table->enum('type', ['nginx', 'apache'])->default('nginx');
+            $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
+            $table->unique(['url', 'status'], 'unique_url_status');
         });
     }
 
@@ -26,6 +30,6 @@ class CreateWebsitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('websites');
+        Schema::dropIfExists('website');
     }
 }

@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Website extends Model
 {
+    const ACTIVE = 1;
     use HasFactory;
+    protected $table = 'website';
 }
