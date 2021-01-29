@@ -28,6 +28,16 @@ class UserController extends MainController
 
     public function save(Request $request)
     {
-
+        if (empty($request->id)) {
+            $user = new User();
+            $user->created_at = now();
+        } else {
+            $user = User::find($request->id);
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->updated_at = now();
+        $user->save();
+        return redirect('/user');
     }
 }

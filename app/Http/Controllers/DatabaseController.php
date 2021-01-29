@@ -30,6 +30,15 @@ class DatabaseController extends MainController
 
     public function save(Request $request)
     {
-
+        if (empty($request->id)) {
+            $database = new Database();
+            $database->created_at = now();
+        } else {
+            $database = Database::find($request->id);
+        }
+        $database->name = $request->name;
+        $database->updated_at = now();
+        $database->save();
+        return redirect('/database');
     }
 }

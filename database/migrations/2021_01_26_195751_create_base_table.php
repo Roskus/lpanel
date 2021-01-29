@@ -17,8 +17,6 @@ class CreateBaseTable extends Migration
             $table->id();
             $table->enum('type', ['MariaDB', 'Postgres']);
             $table->string('name');
-            $table->string('user', 20);
-            $table->string('password', 190);
             $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });

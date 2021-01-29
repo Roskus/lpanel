@@ -7,7 +7,11 @@
             <h1 class="h3 mb-0 text-gray-800 pb-3">{{ __('Databases') }}</h1>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col">
+            <a href="/database/add" class="btn btn-primary mt-2 mb-2">{{ __('New') }}</a>
+        </div>
+    </div>
     <div class="row">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -30,7 +34,7 @@
                             @foreach ($databases as $database)
                             <tr>
                                 <td>
-                                    <a href="/user/edit/{{ $database->id }}">{{ $database->name }}</a>
+                                    <a href="/database/edit/{{ $database->id }}">{{ $database->name }}</a>
                                 </td>
                                 <td>{{ $database->status }}</td>
                                 <td>{{ $database->created_at->format('d/m/Y') }}</td>
