@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -35,7 +36,7 @@
             @include('sidebar')
         </div>
         @endauth
-        <div class="col-10 py-4">
+        <div class="@auth col-10 @else col-12 @endauth py-4">
             @yield('content')
             @if(Route::current()->getName() != 'login')
             <!-- Footer -->

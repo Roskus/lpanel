@@ -22,7 +22,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
                 <a class="collapse-item" href="/site">{{ __('List') }}</a>
-                <a class="collapse-item" href="/site/add">{{ __('Add') }}</a>
+                <a class="collapse-item" href="/site/add">{{ __('Add') }} <i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
     </li>
@@ -39,7 +39,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
                 <a class="collapse-item" href="/user">{{ __('List') }}</a>
-                <a class="collapse-item" href="/user/add">{{ __('Add') }}</a>
+                <a class="collapse-item" href="/user/add">{{ __('Add') }} <i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
     </li>
@@ -55,8 +55,8 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
                 <a class="collapse-item" href="/database">{{ __('List') }}</a>
-                <a class="collapse-item" href="/database/add">{{ __('Add') }}</a>
-                <a class="collapse-item" href="/database/addUser">{{ __('Add user') }}</a>
+                <a class="collapse-item" href="/database/add">{{ __('Add') }} <i class="fas fa-plus-circle"></i></a>
+                <a class="collapse-item" href="/database/addUser">{{ __('Add user') }} <i class="fas fa-user-plus"></i></a>
             </div>
         </div>
     </li>

@@ -35,7 +35,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url('/profile') }}"">
+                        <a class="dropdown-item" href="{{ url('/profile') }}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             {{ __('Profile') }}
                         </a>

@@ -84,5 +84,5 @@
             </div>
         </div>
     </div>
-</div>
+</div><!--./container-->
 @endsection
