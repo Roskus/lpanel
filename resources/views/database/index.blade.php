@@ -23,10 +23,11 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
-                                <th>Status</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Status') }}</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
-                                <th>Actions</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,11 +37,18 @@
                                 <td>
                                     <a href="/database/edit/{{ $database->id }}">{{ $database->name }}</a>
                                 </td>
+                                <td>{{ $database->type }}</td>
                                 <td>{{ $database->status }}</td>
                                 <td>{{ $database->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $database->updated_at->format('d/m/Y') }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-danger btn-circle">
+                                    <a href="@if($database->type != 'Postgres') {{ env('MYSQL_MANAGER') }} @else {{ env('POSTGRES_MANAGER') }} @endif" target="_blank" title="{{ __('Manager') }}" class="btn btn-info btn-circle">
+                                        <i class="fas fa-cogs"></i>
+                                    </a>
+                                    <a href="" title="{{ __('Backup') }}" target="_blank" class="btn btn-warning btn-circle">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a href="#" title="{{ __('Delete') }}" class="btn btn-danger btn-circle">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
