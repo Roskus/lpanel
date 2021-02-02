@@ -2,6 +2,8 @@
 
 Open Source web hosting panel based in laravel
 
+
+
 ## Features
 
 * Virtual Host administration
@@ -54,3 +56,4 @@ php artisan test
 Design based in StartBootstrap
 
 https://github.com/startbootstrap/startbootstrap-sb-admin-2
+https://data.iana.org/TLD/tlds-alpha-by-domain.txt
