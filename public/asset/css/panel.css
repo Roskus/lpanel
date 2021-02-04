@@ -1,3 +1,8 @@
 .sidebar {
     width: 100% !important;
 }
+
+.bg-login-image {
+    background: url("/asset/img/pexels-brett-sayles-2881233.jpg");
+}
+

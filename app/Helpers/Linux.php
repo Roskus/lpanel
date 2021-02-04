@@ -13,8 +13,12 @@ use Symfony\Component\Process\Process;
  */
 class Linux
 {
-
-    public static function getUptime()
+    /**
+     * Get server uptime and return formated for humans
+     *
+     * @return string formated server uptime
+     */
+    public static function getUptime() : string
     {
         $str   = @file_get_contents('/proc/uptime');
         $num   = floatval($str);
@@ -22,7 +26,7 @@ class Linux
         $mins  = $num % 60;      $num = intdiv($num, 60);
         $hours = $num % 24;      $num = intdiv($num, 24);
         $days  = $num;
-        return sprintf("%03d:%02d:%02d:%02d", $days, $hours, $mins, $secs);
+        return sprintf("%03dd: %02dh: %02dm: %02ds", $days, $hours, $mins, $secs);
     }
 
     /**
@@ -30,9 +34,9 @@ class Linux
      *
      * @param string $username linux username
      *
-     *
+     * @return string
      */
-    public static function userAdd(string $username = '')
+    public static function userAdd(string $username = '') : string
     {
         if (!empty($username)) {
             // -m generate home directory
@@ -44,8 +48,8 @@ class Linux
                 throw new ProcessFailedException($process);
             }
 
-            echo $process->getOutput();
-
+            $output = $process->getOutput();
+            return $output;
         }
     }
 }

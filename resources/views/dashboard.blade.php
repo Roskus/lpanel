@@ -18,7 +18,7 @@
                                 <div class="h6">Server: {{ $webserver_name }}</div>
                                 <div class="h6">PHP: {{ $php_version }}</div>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Uptime: {{ $server_uptime }}</div>
+                            <div class="h6 mb-0 font-weight-bold text-gray-800">Uptime: {{ $server_uptime }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-server fa-2x text-gray-300"></i>
