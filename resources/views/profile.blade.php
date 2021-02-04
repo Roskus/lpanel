@@ -60,6 +60,17 @@
     </div>
 
     <div class="form-group">
+        <label class="col-md-4 control-label">{{ __('Language') }}</label>
+        <div class="col-md-6">
+            <select name="lang" id="lang" required class="form-control">
+                <option value=""></option>
+                <option value="en" @if($user->lang == 'en') selected="selected" @endif>English</option>
+                <option value="es" @if($user->lang == 'es') selected="selected" @endif>Spanish</option>
+            </select>
+        </div>
+    </div><!--./form-group-->
+
+    <div class="form-group">
         <div class="col-md-6 col-md-offset-4  text-right">
             <button type="submit" class="btn btn-primary">{{ __('Save' ) }} <i class="fas fa-save"></i></button>
         </div>
