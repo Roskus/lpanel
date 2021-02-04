@@ -2,6 +2,12 @@
 
 Open Source web hosting panel based in Laravel
 
+### Login
+![Larahpanel Login Screenshot](/doc/screenshoot/login.png)
+
+### Dashboard
+![Larahpanel Dashboard Screenshot](/doc/screenshoot/dashboard.png)
+
 ## Features
 
 * Virtual Host administration
