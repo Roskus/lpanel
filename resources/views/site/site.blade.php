@@ -13,13 +13,15 @@
         <input type="hidden" name="id" value="{{ $website->id }}">
         <div class="form-group row">
             <div class="col">
-                <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-contol">
+                <label>URL</label>
+                <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-control">
             </div>
         </div>
         <div class="form-group row">
             <div class="col">
+                <label>{{ __('Type') }}</label>
                 <select name="type" required="requied" class="form-control">
-                    <option value="">Type</option>
+                    <option value=""></option>
                     <option value="nginx" @if ($website->type == 'nginx') selected="selected" @endif>Nginx</option>
                     <option value="apache" @if ($website->type == 'apache') selected="selected" @endif>Apache</option>
                 </select>

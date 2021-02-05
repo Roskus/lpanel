@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 class="h3 mb-0 text-gray-800 pb-3">{{ __('User') }}</h1>
+            <h1 class="h3 mb-0 text-gray-800 pb-3"><i class="fas fa-user"></i> {{ __('User') }}</h1>
         </div>
     </div>
 
@@ -20,7 +20,12 @@
             <input type="email" name="email" id="email" value="{{ $user->email }}" required maxlength="254" class="form-control">
         </div>
         <div class="row form-group">
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+            <button type="submit" class="btn btn-primary btn-icon-split">
+                <span class="text">{{ __('Save') }}</span>
+                <span class="icon text-white-50">
+                    <i class="far fa-save"></i>
+                </span>
+            </button>
         </div>
     </form>
 </div>

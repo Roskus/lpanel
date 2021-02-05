@@ -4,18 +4,18 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 class="h3 mb-0 text-gray-800 pb-3">Websites</h1>
+            <h1 class="h3 mb-0 text-gray-800 pb-3"><i class="fas fa-fw fa-sitemap"></i> {{ __('Websites') }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a href="/site/add" class="btn btn-primary mt-2 mb-2">{{ __('New') }}</a>
+            <a href="/site/add" class="btn btn-primary mt-2 mb-2">{{ __('Add') }}</a>
         </div>
     </div>
     <div class="row">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Websites</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('Websites') }}</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -23,11 +23,11 @@
                         <thead>
                             <tr>
                                 <th>Url</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
-                                <th>Actions</th>
+                                <th>{{ __('Type') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Created at') }}</th>
+                                <th>{{ __('Updated at') }}</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>

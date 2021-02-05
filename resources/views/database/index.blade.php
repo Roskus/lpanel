@@ -4,12 +4,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 class="h3 mb-0 text-gray-800 pb-3">{{ __('Databases') }}</h1>
+            <h1 class="h3 mb-0 text-gray-800 pb-3"><i class="fas fa-fw fa-database"></i> {{ __('Databases') }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a href="/database/add" class="btn btn-primary mt-2 mb-2">{{ __('New') }}</a>
+            <a href="/database/add" class="btn btn-primary mt-2 mb-2">{{ __('Add') }}</a>
         </div>
     </div>
     <div class="row">
@@ -25,8 +25,8 @@
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
+                                <th>{{ __('Created at') }}</th>
+                                <th>{{ __('Updated at') }}</th>
                                 <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>

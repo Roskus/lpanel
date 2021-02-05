@@ -4,12 +4,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 class="h3 mb-0 text-gray-800 pb-3">{{ __('Users') }}</h1>
+            <h1 class="h3 mb-0 text-gray-800 pb-3"><i class="fas fa-fw fa-users-cog"></i> {{ __('Users') }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a href="/user/add" class="btn btn-primary mt-2 mb-2">{{ __('New') }}</a>
+            <a href="/user/add" class="btn btn-primary mt-2 mb-2">{{ __('Add') }}</a>
         </div>
     </div>
     <div class="row">
@@ -22,11 +22,11 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Created at</th>
-                                <th>Updated at</th>
-                                <th>Actions</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Created at') }}</th>
+                                <th>{{ __('Updated at') }}</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>

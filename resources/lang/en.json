@@ -1,4 +1,20 @@
 {
+    "Add" : "Add",
+    "Actions" : "Actions",
+    "Confirm password" : "Confirm Password",
+    "Created at" : "Created at",
+    "Databases" : "Databases",
+    "Disk space" : "Disk space",
     "Forgot your password?" : "Forgot your password?",
-    "Users" : "Users"
+    "Language" : "Language",
+    "Logout" : "Logout",
+    "Name" : "Name",
+    "Password" : "Password",
+    "Profile" : "Profile",
+    "Updated at" : "Updated at",
+    "User" : "User",
+    "Users" : "Users",
+    "Save" : "Save",
+    "Status" : "Status",
+    "Type" : "Type"
 }

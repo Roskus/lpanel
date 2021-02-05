@@ -1,4 +1,20 @@
 {
+    "Add" : "Añadir",
+    "Actions" : "Acciones",
+    "Confirm password" : "Confirmar contraseña",
+    "Created at" : "Fecha creación",
+    "Databases" : "Bases de datos",
+    "Disk space" : "Espacio en disco",
     "Forgot your password?" : "¿Olvidaste tu contraseña?",
-    "Users" : "Usuarios"
+    "Language" : "Idioma",
+    "Logout" : "Salir",
+    "Name" : "Nombre",
+    "Password" : "Contraseña",
+    "Profile" : "Perfil",
+    "Updated at" : "Fecha modificación",
+    "User" : "Usuario",
+    "Users" : "Usuarios",
+    "Save" : "Guardar",
+    "Status" : "Estado",
+    "Type" : "Tipo"
 }
