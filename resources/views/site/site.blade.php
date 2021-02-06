@@ -8,13 +8,39 @@
         </div>
     </div>
     <div class="row">
-        <form method="post" action="/site/save" class="form">
+        <form method="post" action="/site/save">
         @csrf
         <input type="hidden" name="id" value="{{ $website->id }}">
         <div class="form-group row">
             <div class="col">
                 <label>URL</label>
-                <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-control">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">https://</div>
+                    </div>
+                    <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-control">
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-check">
+                    <input type="checkbox" name="protocols[http]" id="http" value="Y" class="form-check-input">
+                    <label class="form-check-label" for="defaultCheck1">
+                        HTTP
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="protocols[https]" id="https" value="Y" class="form-check-input">
+                    <label class="form-check-label" for="defaultCheck2">
+                        HTTPS
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="protocols[letsencrypt]" id="letsencrypt" value="Y" class="form-check-input">
+                    <label class="form-check-label" for="defaultCheck2">
+                        <a href="https://letsencrypt.org/" target="_blank">Let's Encript</a>
+                    </label>
+                  </div>
             </div>
         </div>
         <div class="form-group row">
