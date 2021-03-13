@@ -48,7 +48,11 @@ class SiteController extends MainController
      */
     public function save(Request $request)
     {
-        // TODO: Add validator
+        $request->validate([
+            //url' => 'required|unique:website|max:255',
+            'type' => 'required'
+        ]);
+
         if (empty($request->id)) {
             $website = new Website();
             $website->created_at = now();
@@ -59,13 +63,21 @@ class SiteController extends MainController
         $url = str_replace('http://', '', $url);
         $url = str_replace('https://', '', $url);
         $website->url = $url;
+        $alias = trim($request->alias);
+        $alias = \str_replace("\r", '', $alias);
+        $alias = \explode("\n", $alias);
+        $website->alias = json_encode($alias);
         $website->type = $request->type;
+        $website->http = (empty($request->protocols['http'])) ? false : true;
+        $website->https = (empty($request->protocols['https'])) ? false : true;
+        $website->http2https = (empty($request->protocols['http2https'])) ? false : true;
+        $website->lets_encrypt = (empty($request->protocols['lets_encrypt'])) ? false : true;
         $website->updated_at = now();
         $website->save();
 
         $params = [
             'domain' => $url,
-            '--server' => $request->type
+            'server' => $request->type
         ];
         \Artisan::call('website:create', $params);
         return redirect('/site');

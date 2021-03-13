@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('/asset/theme/sb-admin-2/css/sb-admin-2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/asset/css/panel.css') }}">
     <link rel="stylesheet" href="{{ asset('/asset/vendor/fontawesome/5.15.2/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/asset/vendor/devicon/2.10.1/devicon.min.css') }}">
 </head>
 <body @if(Route::current()->getName() === 'login') class="bg-gradient-primary" @endif>
 <div id="app">

@@ -15,6 +15,11 @@ class   AlterWebsiteTable extends Migration
     {
         //
         Schema::table('website', function (Blueprint $table) {
+            $table->addColumn('boolean', 'http')->default(true);
+            $table->addColumn('boolean', 'https')->default(false);
+            $table->addColumn('boolean', 'http2https')->default(false);
+            $table->addColumn('boolean', 'lets_encrypt')->default(false);
+            $table->addColumn('json', 'alias')->nullable()->default(null);
             $table->softDeletes();
         });
     }
@@ -28,6 +33,10 @@ class   AlterWebsiteTable extends Migration
     {
         //
         Schema::table('website', function (Blueprint $table) {
+            $table->removeColumn('http');
+            $table->removeColumn('https');
+            $table->removeColumn('http2https');
+            $table->removeColumn('lets_encrypt');
             $table->dropSoftDeletes();
         });
     }

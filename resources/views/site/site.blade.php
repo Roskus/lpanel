@@ -7,6 +7,21 @@
             <h1 class="h3 mb-0 text-gray-800 pb-3">Website</h1>
         </div>
     </div>
+
+    @if ($errors->any())
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="row">
         <form method="post" action="/site/save">
         @csrf
@@ -20,27 +35,39 @@
                     </div>
                     <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-control">
                 </div>
+                <div class="col">
+                    <label class="">Alias (One per line)</label>
+                    <div class="">
+                        <textarea name="alias" class="form-control">{{ !empty($website->alias) ? implode("\n", json_decode($website->alias)) : '' }}</textarea>
+                    </div>
+                </div>
             </div>
 
             <div class="col">
                 <div class="form-check">
-                    <input type="checkbox" name="protocols[http]" id="http" value="Y" class="form-check-input">
+                    <input type="checkbox" name="protocols[http]" id="http" value="Y" @if($website->http) checked="checked" @endif class="form-check-input">
                     <label class="form-check-label" for="defaultCheck1">
-                        HTTP
+                        HTTP <small class="text-muted">Works over HTTP protocol (Port: 80)</small>
                     </label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" name="protocols[https]" id="https" value="Y" class="form-check-input">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" name="protocols[https]" id="https" value="Y" @if($website->https) checked="checked" @endif class="form-check-input">
                     <label class="form-check-label" for="defaultCheck2">
-                        HTTPS
+                        HTTPS <small class="text-muted">Works over secure protocol (Port: 443)</small>
                     </label>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" name="protocols[letsencrypt]" id="letsencrypt" value="Y" class="form-check-input">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" name="protocols[http2https]" id="http2https" value="Y" @if($website->http2https) checked="checked" @endif class="form-check-input">
+                    <label class="form-check-label" for="defaultCheck2">
+                        HTTP -> HTTPS <small class="text-muted">Automatic redirect HTTP traffic to HTTPS</small>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" name="protocols[lets_encrypt]" id="letsencrypt" value="Y" @if($website->lets_encrypt) checked="checked" @endif class="form-check-input">
                     <label class="form-check-label" for="defaultCheck2">
                         <a href="https://letsencrypt.org/" target="_blank">Let's Encript</a>
                     </label>
-                  </div>
+                </div>
             </div>
         </div>
         <div class="form-group row">

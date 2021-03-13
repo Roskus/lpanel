@@ -35,6 +35,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h6 font-weight-bold text-success text-uppercase mb-1">Websites</div>
+                            <i class="devicon-nginx-original colored"></i>
+                            <i class="devicon-apache-line-wordmark colored"></i>
+
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $website_count }}</div>
                         </div>
                         <div class="col-auto">
@@ -73,6 +76,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{ __('Databases') }}</div>
+                            <i class="devicon-mysql-plain-wordmark colored"></i>
+                            <i class="devicon-postgresql-plain-wordmark colored"></i>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $database_count }}</div>
                         </div>
                         <div class="col-auto">
