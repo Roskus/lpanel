@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use App\Models\Website;
 
 class SiteController extends MainController
@@ -60,6 +61,26 @@ class SiteController extends MainController
         $website->url = $url;
         $website->type = $request->type;
         $website->updated_at = now();
+        $website->save();
+
+        $params = [
+            'domain' => $url,
+            '--server' => $request->type
+        ];
+        \Artisan::call('website:create', $params);
+        return redirect('/site');
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     *
+     */
+    public function delete(Request $request, int $id)
+    {
+        $website = Website::find($request->id);
+        $website->delete();
         $website->save();
         return redirect('/site');
     }

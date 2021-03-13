@@ -42,6 +42,11 @@ class WebsiteCreate extends Command
     {
         $domain = $this->argument('domain');
         $server = $this->argument('server');
+
+        $domain = str_replace('domain=', '', $domain);
+        $server = str_replace('server=', '', $server);
+        $server = str_replace('--server=', '', $server);
+
         $php_version = $this->argument('php');
 
         $website = Website::where('url', $domain)->first();

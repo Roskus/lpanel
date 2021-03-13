@@ -26,6 +26,7 @@ Route::get('/site', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/site/add', [App\Http\Controllers\SiteController::class, 'add']);
 Route::get('/site/edit/{id}', [App\Http\Controllers\SiteController::class, 'edit']);
 Route::post('/site/save', [App\Http\Controllers\SiteController::class, 'save']);
+Route::get('/site/delete/{id}', [App\Http\Controllers\SiteController::class, 'delete']);
 
 // Profile
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'detail']);

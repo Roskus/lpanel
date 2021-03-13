@@ -42,7 +42,7 @@
                                 <td>{{ $site->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $site->updated_at->format('d/m/Y') }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-danger btn-circle">
+                                    <a href="/site/delete/{{ $site->id }}" class="btn btn-danger btn-circle">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>

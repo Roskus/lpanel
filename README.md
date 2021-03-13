@@ -3,10 +3,10 @@
 Open Source web hosting panel based in Laravel
 
 ### Login
-![Larahpanel Login Screenshot](/doc/screenshoot/login.png)
+![Lpanel Login Screenshot](/doc/screenshoot/login.png)
 
 ### Dashboard
-![Larahpanel Dashboard Screenshot](/doc/screenshoot/dashboard.png)
+![Lpanel Dashboard Screenshot](/doc/screenshoot/dashboard.png)
 
 ## Features
 
@@ -32,10 +32,16 @@ php artisan website:create domain.com
 php artisan database:create domain_data server=apache
 ```
 
-### Create a database
+### Create a database by default use MariaDB
 
 ```terminal
-php artisan database:create domain_data
+php artisan database:create dbname
+```
+
+### Create a database by type
+
+```terminal
+php artisan database:create dbname type=postgresql
 ```
 
 ### Create a database user
@@ -47,7 +53,7 @@ php artisan database:user-create
 ### Create a linux user
 
 ```terminal
-php artisan linux:user-create
+php artisan linux:user-create name
 ```
 
 ## Tests
