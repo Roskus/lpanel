@@ -20,6 +20,12 @@ Open Source web hosting panel based in Laravel
 
 ## Commands
 
+### User panel create
+
+```terminal
+php artisan user:create
+```
+
 ### Create a website virtual host by default create a nginx virtualhost
 
 ```terminal
