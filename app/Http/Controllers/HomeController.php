@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\MainController;
 use App\Models\Website;
 use App\Models\User;
 use App\Models\Database;
@@ -12,8 +13,6 @@ use App\Helpers\File as FileHelper;
 
 class HomeController extends MainController
 {
-
-
     /**
      * Show the application dashboard.
      *

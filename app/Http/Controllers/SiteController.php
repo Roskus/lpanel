@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\MainController;
 use App\Models\Website;
 
 class SiteController extends MainController
@@ -36,7 +37,7 @@ class SiteController extends MainController
      */
     public function edit(Request $request, int $id)
     {
-        $website = Website::find($request->id);
+        $website = Website::find($id);
         $data['website'] = $website;
         return view('site.site', $data);
     }
@@ -79,7 +80,7 @@ class SiteController extends MainController
             'domain' => $url,
             'server' => $request->type
         ];
-        \Artisan::call('website:create', $params);
+        Artisan::call('website:create', $params);
         return redirect('/site');
     }
 

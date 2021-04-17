@@ -1,9 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "roskus/lpanel",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "LPanel",
     "keywords": [
-        "framework",
+        "lpanel",
+        "hosting",
         "laravel"
     ],
     "license": "MIT",
@@ -23,7 +24,8 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "vimeo/psalm": "^4.4"
     },
     "config": {
         "optimize-autoloader": true,
@@ -40,7 +42,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "App\\Helpers\\" : "app/helpers/"
+            "App\\Helpers\\" : "app/Helpers/"
         }
     },
     "autoload-dev": {
