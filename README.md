@@ -35,7 +35,7 @@ php artisan website:create domain.com
 ### Create a website virtual host with apache virtualhost
 
 ```terminal
-php artisan database:create domain_data server=apache
+php artisan website:create domain_data server=apache
 ```
 
 ### Create a database by default use MariaDB

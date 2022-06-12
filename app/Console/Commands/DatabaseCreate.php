@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseCreate extends Command
 {
@@ -37,6 +39,18 @@ class DatabaseCreate extends Command
      */
     public function handle()
     {
-        return 0;
+        $status = 0;
+        $schema = $this->argument('name');
+        $charset = config("database.connections.mysql.charset",'utf8mb4');
+        $collation = config("database.connections.mysql.collation",'utf8mb4_unicode_ci');
+
+        config(["database.connections.mysql.database" => null]);
+        $query = "CREATE DATABASE IF NOT EXISTS $schema CHARACTER SET $charset COLLATE $collation;";
+        try {
+            $status = DB::statement($query);
+        } catch (\Throwable $t) {
+            Log::error($t->getMessage());
+        }
+        return $status;
     }
 }
