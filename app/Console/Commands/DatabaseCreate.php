@@ -48,7 +48,9 @@ class DatabaseCreate extends Command
         $query = "CREATE DATABASE IF NOT EXISTS $schema CHARACTER SET $charset COLLATE $collation;";
         try {
             $status = DB::statement($query);
+            $this->info("Database $schema created success.");
         } catch (\Throwable $t) {
+            $this->error("An error occurred creating the DB: $schema");
             Log::error($t->getMessage());
         }
         return $status;
