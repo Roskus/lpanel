@@ -1,6 +1,6 @@
 FROM php:8.1-fpm
 RUN apt-get update && apt-get install -y \
-        libicu-dev vim redis-tools git libxml2-dev wget zip unzip mc htop
+        libicu-dev vim redis-tools git libxml2-dev wget zip unzip mc htop nano
 RUN apt-get update -y && apt-get install -y libwebp-dev libjpeg-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
     libfreetype6-dev zlib1g-dev libzip-dev \
     && docker-php-ext-install \
