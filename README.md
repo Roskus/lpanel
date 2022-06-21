@@ -20,6 +20,19 @@ Open Source web hosting panel based in Laravel
   * Postgres
 * Linux user administration
 
+## Setup docker
+```terminal
+docker-compose build
+docker-compose up -d
+```
+
+## Setup
+```terminal
+cp .env.example .env
+php artisan key:generate
+composer install
+```
+
 ## Commands
 
 ### User panel create
