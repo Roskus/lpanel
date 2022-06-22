@@ -13,6 +13,10 @@ RUN docker-php-ext-install gd
 ADD ./conf.d/  /usr/local/etc/php/conf.d/
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Download wp-cli
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 RUN chown -R www-data:www-data /var/www
 #WORKDIR .
 #RUN composer install
