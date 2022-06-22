@@ -40,6 +40,7 @@ class WebsiteCreate extends Command
      */
     public function handle()
     {
+        $status = 0; //success
         $domain = $this->argument('domain');
         $server = $this->argument('server');
 
@@ -63,7 +64,17 @@ class WebsiteCreate extends Command
         if ($server == 'nginx') {
             $template = resource_path('templates/config/nginx/site_php.conf');
         }
-        $destination = "/etc/$server/sites-available/$domain.conf";
+
+        $destination = "/etc/$server";
+        if (is_dir("/etc/$server/sites-available"))
+        {
+            $destination = "/etc/$server/sites-available/$domain.conf";
+        }
+
+        if (is_dir("/etc/$server/conf.d"))
+        {
+            $destination = "/etc/$server/conf.d/$domain.conf";
+        }
 
         $template_content = file_get_contents($template);
         $template_content = str_replace('|WEBSITE_URL|', $domain, $template_content);
@@ -75,14 +86,19 @@ class WebsiteCreate extends Command
             $this->info('Virtual host created successfuly');
         } catch (\Throwable $th) {
             //throw $th;
+            $status = -1;
         }
 
         // Enable virtual host
-        $virtual_host_path = "/etc/$server/sites-available/";
-        chdir($virtual_host_path);
-        $process = new Process(['ln', '-s', $destination]);
-        $process->run();
-
-        return 0;
+        if (is_dir("/etc/$server/sites-available"))
+        {
+            $virtual_host_path = "/etc/$server/sites-enabled/";
+            chdir($virtual_host_path);
+            $process = new Process(['ln', '-s', $destination]);
+            $process->run();
+        }
+        // TODO: check nginx -t
+        // TODO: service nginx reload
+        return $status;
     }
 }
