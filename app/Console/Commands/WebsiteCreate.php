@@ -14,7 +14,7 @@ class WebsiteCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'website:create {domain} {server=nginx : Webserver by default nginx} {php=7.4}';
+    protected $signature = 'website:create {domain} {server=nginx : Webserver by default nginx} {php=8.1}';
 
     /**
      * The console command description.
@@ -86,6 +86,7 @@ class WebsiteCreate extends Command
             $this->info('Virtual host created successfuly');
         } catch (\Throwable $th) {
             //throw $th;
+            $this->error("Error creating vhost in: $destination");
             $status = -1;
         }
 
