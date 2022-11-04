@@ -83,7 +83,7 @@ class WebsiteCreate extends Command
 
         try {
             file_put_contents($destination, $template_content);
-            $this->info('Virtual host created successfuly');
+            $this->info('Virtual host created successfully');
         } catch (\Throwable $th) {
             //throw $th;
             $this->error("Error creating vhost in: $destination");
