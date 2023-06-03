@@ -5,10 +5,10 @@ Open Source web hosting panel based in Laravel
 [![build](https://github.com/Roskus/lpanel/actions/workflows/laravel.yml/badge.svg)](https://github.com/Roskus/lpanel/actions/workflows/laravel.yml)
 
 ### Login
-![Lpanel Login Screenshot](/doc/screenshoot/login.png)
+![Lpanel Login Screenshot](./doc/screenshoot/login.png)
 
 ### Dashboard
-![Lpanel Dashboard Screenshot](/doc/screenshoot/dashboard.png)
+![Lpanel Dashboard Screenshot](./doc/screenshoot/dashboard.png)
 
 ## Features
 

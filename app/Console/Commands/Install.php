@@ -52,13 +52,16 @@ class Install extends Command
             if(File::copy(base_path('.env.example'), base_path('.env'))){
                 $this->info('Copy default .env.example > .env');
             }
+        }
 
-            // Generate APP_KEY
+        //2- Generate APP_KEY
+        if(empty(env('APP_KEY')))
+        {
             Artisan::call('key:generate');
             $this->info('Application key generated');
         }
 
-        //2 - Check if DB_PASSWORD is set
+        //3 - Check if DB_PASSWORD is set
         if(empty(env('DB_PASSWORD')))
         {
             $yesno = $this->ask('DB_PASSWORD is in blank. Do you want to setup? (Y/N)');
@@ -68,9 +71,17 @@ class Install extends Command
             }
         }
 
+        //4 - Database Exist
+        $this->databaseExist();
+
         return 0;
     }
 
+    /**
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
     private function setEnv(string $key, string $value)
     {
         file_put_contents(app()->environmentFilePath(), str_replace(
@@ -78,5 +89,22 @@ class Install extends Command
             $key . '=' . $value,
             file_get_contents(app()->environmentFilePath())
         ));
+    }
+
+    private function databaseExist() : bool
+    {
+        $exist = false;
+        try {
+            DB::connection()->getPdo();
+            if(DB::connection()->getDatabaseName()){
+                $this->info("Yes! Successfully connected to the DB: " . DB::connection()->getDatabaseName());
+                $exist = true;
+            }else{
+                $this->error("Could not find the database. Please check your configuration.");
+            }
+        } catch (\Throwable $t) {
+            $this->info("Could not open connection to database server.  Please check your configuration.");
+        }
+        return $exist;
     }
 }
