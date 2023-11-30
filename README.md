@@ -27,11 +27,13 @@ docker-compose up -d
 ```
 
 ## Setup
+Clone project
 ```terminal
-cp .env.example .env
-php artisan key:generate
-composer install
-php artisan lpanel:install
+git clone git@github.com:Roskus/lpanel.git
+```
+Just run make
+```terminal
+make install
 ```
 
 ## Commands
