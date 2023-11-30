@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Database;
+use Illuminate\Http\Request;
 
 class DatabaseController extends MainController
 {
@@ -11,13 +11,15 @@ class DatabaseController extends MainController
     public function index(Request $request)
     {
         $data['databases'] = Database::all();
+
         return view('database.index', $data);
     }
 
     public function add(Request $request)
     {
-        $database = New Database();
+        $database = new Database();
         $data['database'] = $database;
+
         return view('database.database', $data);
     }
 
@@ -25,6 +27,7 @@ class DatabaseController extends MainController
     {
         $database = Database::find($id);
         $data['database'] = $database;
+
         return view('database.database', $data);
     }
 
@@ -39,6 +42,7 @@ class DatabaseController extends MainController
         $database->name = $request->name;
         $database->updated_at = now();
         $database->save();
+
         return redirect('/database');
     }
 }

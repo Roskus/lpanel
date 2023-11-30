@@ -41,10 +41,10 @@ class DatabaseCreate extends Command
     {
         $status = 0;
         $schema = $this->argument('name');
-        $charset = config("database.connections.mysql.charset",'utf8mb4');
-        $collation = config("database.connections.mysql.collation",'utf8mb4_unicode_ci');
+        $charset = config('database.connections.mysql.charset', 'utf8mb4');
+        $collation = config('database.connections.mysql.collation', 'utf8mb4_unicode_ci');
 
-        config(["database.connections.mysql.database" => null]);
+        config(['database.connections.mysql.database' => null]);
         $query = "CREATE DATABASE IF NOT EXISTS $schema CHARACTER SET $charset COLLATE $collation;";
         try {
             $status = DB::statement($query);
@@ -53,6 +53,7 @@ class DatabaseCreate extends Command
             $this->error("An error occurred creating the DB: $schema");
             Log::error($t->getMessage());
         }
+
         return $status;
     }
 }

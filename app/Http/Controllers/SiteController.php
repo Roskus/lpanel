@@ -2,56 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Website;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\MainController;
-use App\Models\Website;
 
 class SiteController extends MainController
 {
-    /**
-     *
-     * @param Request $request
-     */
     public function index(Request $request)
     {
         $website = new Website();
         $data['websites'] = $website->all();
+
         return view('site.index', $data);
     }
 
-    /**
-     * @param Request $request
-     */
     public function add(Request $request)
     {
         $website = new Website();
         $data['website'] = $website;
+
         return view('site.site', $data);
     }
 
-    /**
-     *
-     * @param Request $request
-     * @param int $id
-     */
     public function edit(Request $request, int $id)
     {
         $website = Website::find($id);
         $data['website'] = $website;
+
         return view('site.site', $data);
     }
 
     /**
      * Save method
-     *
-     * @param Request $request
      */
     public function save(Request $request)
     {
         $request->validate([
             //url' => 'required|unique:website|max:255',
-            'type' => 'required'
+            'type' => 'required',
         ]);
 
         if (empty($request->id)) {
@@ -78,23 +66,19 @@ class SiteController extends MainController
 
         $params = [
             'domain' => $url,
-            'server' => $request->type
+            'server' => $request->type,
         ];
         Artisan::call('website:create', $params);
+
         return redirect('/site');
     }
 
-    /**
-     * @param Request $request
-     * @param int $id
-     *
-     *
-     */
     public function delete(Request $request, int $id)
     {
         $website = Website::find($request->id);
         $website->delete();
         $website->save();
+
         return redirect('/site');
     }
 }

@@ -12,3 +12,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea
+etc/infrastructure/nginx/conf.d/
+.phpunit.cache/

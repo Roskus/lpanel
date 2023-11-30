@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use App\Models\Website;
+use Illuminate\Console\Command;
+use Symfony\Component\Process\Process;
 
 class WebsiteCreate extends Command
 {
@@ -51,7 +50,7 @@ class WebsiteCreate extends Command
         $php_version = $this->argument('php');
 
         $website = Website::where('url', $domain)->first();
-        if (!$website) {
+        if (! $website) {
             $website = new Website();
             $website->url = $domain;
             $website->created_at = now();
@@ -66,13 +65,11 @@ class WebsiteCreate extends Command
         }
 
         $destination = "/etc/$server";
-        if (is_dir("/etc/$server/sites-available"))
-        {
+        if (is_dir("/etc/$server/sites-available")) {
             $destination = "/etc/$server/sites-available/$domain.conf";
         }
 
-        if (is_dir("/etc/$server/conf.d"))
-        {
+        if (is_dir("/etc/$server/conf.d")) {
             $destination = "/etc/$server/conf.d/$domain.conf";
         }
 
@@ -91,13 +88,13 @@ class WebsiteCreate extends Command
         }
 
         // Enable virtual host
-        if (is_dir("/etc/$server/sites-available"))
-        {
+        if (is_dir("/etc/$server/sites-available")) {
             $virtual_host_path = "/etc/$server/sites-enabled/";
             chdir($virtual_host_path);
             $process = new Process(['ln', '-s', $destination]);
             $process->run();
         }
+
         // TODO: check nginx -t
         // TODO: service nginx reload
         return $status;

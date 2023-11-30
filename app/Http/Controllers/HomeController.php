@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\MainController;
-use App\Models\Website;
-use App\Models\User;
-use App\Models\Database;
-
-use App\Helpers\Linux;
 use App\Helpers\File as FileHelper;
+use App\Helpers\Linux;
+use App\Models\Database;
+use App\Models\User;
+use App\Models\Website;
 
 class HomeController extends MainController
 {
@@ -39,6 +36,7 @@ class HomeController extends MainController
         $data['disk_free'] = FileHelper::formatSize($disk_free);
         $data['disk_total'] = FileHelper::formatSize($disk_total);
         $data['disk_percentage'] = $disk_percentage;
+
         return view('dashboard', $data);
     }
 }

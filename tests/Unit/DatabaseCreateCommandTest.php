@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use App\Console\Commands\DatabaseCreate;
+
 class DatabaseCreateCommandTest extends TestCase
 {
-    public function setUp() : void
+    public function setUp(): void
     {
 
     }
@@ -21,7 +21,7 @@ class DatabaseCreateCommandTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
 
     }

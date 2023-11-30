@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends MainController
 {
@@ -11,18 +11,21 @@ class UserController extends MainController
     public function index(Request $request)
     {
         $data['users'] = User::all();
+
         return view('user.index', $data);
     }
 
     public function add(Request $request)
     {
         $data['user'] = new User();
+
         return view('user.user', $data);
     }
 
     public function edit(Request $request, int $id)
     {
         $data['user'] = User::find($id);
+
         return view('user.user', $data);
     }
 
@@ -38,6 +41,7 @@ class UserController extends MainController
         $user->email = $request->email;
         $user->updated_at = now();
         $user->save();
+
         return redirect('/user');
     }
 }

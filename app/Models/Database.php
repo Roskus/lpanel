@@ -10,5 +10,6 @@ class Database extends Model
     use HasFactory;
 
     const ACTIVE = 1;
-    protected $table = 'base';//Can't use database is a reserved word
+
+    protected $table = 'base'; //Can't use database is a reserved word
 }

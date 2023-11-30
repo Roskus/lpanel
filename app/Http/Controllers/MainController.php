@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+
 /**
  * Main Controller
  */
@@ -22,6 +22,7 @@ class MainController extends Controller
             if (Auth::check()) {
                 App::setLocale(Auth::user()->lang);
             }
+
             return $next($request);
         });
     }

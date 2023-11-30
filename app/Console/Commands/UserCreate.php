@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
 class UserCreate extends Command
@@ -49,10 +49,11 @@ class UserCreate extends Command
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($pwd),
-                'lang' => $lang
+                'lang' => $lang,
             ]);
 
         $this->info('Account created for '.$name);
+
         return 0;
     }
 }
