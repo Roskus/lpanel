@@ -1,5 +1,7 @@
+#!/bin/bash
 # Name of the program
 NAME = LPanel
+DOCKER_PHP = lpanel_php_1
 
 install:
 	composer install
@@ -14,3 +16,6 @@ start:
 build:
 	docker-compose build
 	docker-compose up -d
+
+ssh: ## Connect into php container
+	docker exec -it ${DOCKER_PHP} /bin/bash

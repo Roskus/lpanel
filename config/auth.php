@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => env('AUTH_GUARD', 'web'),
+        'passwords' =>  env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
     /*
@@ -68,8 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-            'table' => 'user',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
         /*
         'users' => [
@@ -83,11 +82,11 @@ return [
     | Resetting Passwords
     |--------------------------------------------------------------------------
     |
-    | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
-    | separate password reset settings based on the specific user types.
+    | These configuration options specify the behavior of Laravel's password
+    | reset functionality, including the table utilized for token storage
+    | and the user provider that is invoked to actually retrieve users.
     |
-    | The expire time is the number of minutes that the reset token should be
+    | The expiry time is the number of minutes that each reset token will be
     | considered valid. This security feature keeps tokens short-lived so
     | they have less time to be guessed. You may change this as needed.
     |
@@ -100,7 +99,7 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_reset',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
@@ -117,6 +116,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];
