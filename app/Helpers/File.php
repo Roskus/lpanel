@@ -10,7 +10,7 @@ class File
     /**
      * Return human formated file size
      *
-     * @param  int  $size bytes
+     * @param  int  $size  bytes
      * @return string formated size for humans
      */
     public static function formatSize($size)

@@ -16,8 +16,12 @@
             <input type="text" name="name" id="name" value="{{ $user->name }}" required maxlength="50" class="form-control">
         </div>
         <div class="row form-group">
-            <label>E-mail</label>
+            <label for="email">E-mail</label>
             <input type="email" name="email" id="email" value="{{ $user->email }}" required maxlength="254" class="form-control">
+        </div>
+        <div class="row form-group">
+            <label for="password">{{ __('Password') }}</label>
+            <input type="password" name="password" id="password" value="" class="form-control">
         </div>
         <div class="row form-group">
             <button type="submit" class="btn btn-primary btn-icon-split">

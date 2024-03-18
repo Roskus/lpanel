@@ -23,10 +23,10 @@ Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'detail']
 Route::post('/profile/save', [App\Http\Controllers\ProfileController::class, 'save']);
 
 // User
-Route::get('/user', [App\Http\Controllers\UserController::class, 'index']);
-Route::get('/user/add', [App\Http\Controllers\UserController::class, 'add']);
-Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
-Route::post('/user/save', [App\Http\Controllers\UserController::class, 'save']);
+Route::get('/user', [App\Http\Controllers\User\UserIndexController::class, 'index']);
+Route::get('/user/create', [App\Http\Controllers\User\UserCreateController::class, 'create']);
+Route::get('/user/update/{id}', [App\Http\Controllers\User\UserUpdateController::class, 'update']);
+Route::post('/user/save', [App\Http\Controllers\User\UserSaveController::class, 'save']);
 
 // Database
 Route::get('/database', [App\Http\Controllers\DatabaseController::class, 'index']);

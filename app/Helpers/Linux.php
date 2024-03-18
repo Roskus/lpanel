@@ -21,7 +21,7 @@ class Linux
     public static function getUptime(): string
     {
         $str = @file_get_contents('/proc/uptime');
-        $num = floatval($str);
+        $num = intval($str);
         $secs = fmod($num, 60);
         $num = intdiv($num, 60);
         $mins = $num % 60;
@@ -36,7 +36,7 @@ class Linux
     /**
      * Add Linux user to the system
      *
-     * @param  string  $username linux username
+     * @param  string  $username  linux username
      */
     public static function userAdd(string $username = ''): string
     {
@@ -54,6 +54,7 @@ class Linux
 
             return $output;
         }
+
         return 'ERROR: username can\'t be empty';
     }
 }
