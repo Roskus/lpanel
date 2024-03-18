@@ -58,3 +58,6 @@
     </div><!--./row-->
 </div><!--./container-fluid-->
 @endsection
+@push('scripts')
+    <script src="{{ asset('/asset/js/User.js') }}"></script>
+@endpush

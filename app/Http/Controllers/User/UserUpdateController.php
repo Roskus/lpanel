@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\MainController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserUpdateController
+class UserUpdateController extends  MainController
 {
     public function update(Request $request, int $id)
     {

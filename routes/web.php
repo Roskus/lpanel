@@ -27,6 +27,7 @@ Route::get('/user', [App\Http\Controllers\User\UserIndexController::class, 'inde
 Route::get('/user/create', [App\Http\Controllers\User\UserCreateController::class, 'create']);
 Route::get('/user/update/{id}', [App\Http\Controllers\User\UserUpdateController::class, 'update']);
 Route::post('/user/save', [App\Http\Controllers\User\UserSaveController::class, 'save']);
+Route::get('/user/delete/{id}', [App\Http\Controllers\User\UserDeleteController::class, 'delete']);
 
 // Database
 Route::get('/database', [App\Http\Controllers\DatabaseController::class, 'index']);
