@@ -2,29 +2,29 @@
 version: "3.9"
 services:
   php:
-    #image: php:8.3-fpm
-    build: './etc/infrastructure/php'
+    #image: php:8.4-fpm
+    build: './infrastructure/etc/php'
     volumes:
     - ./etc/.bashrc:/root/.bashrc
     - .:/var/www/lpanel/
-    - ./etc/infrastructure/nginx/conf.d:/etc/nginx/conf.d/
+    - ./infrastructure/etc/nginx/conf.d:/etc/nginx/conf.d/
     working_dir: /var/www/lpanel/
     links:
     - db
     - cache
   web:
     #image: nginx:stable
-    build: './etc/infrastructure/nginx'
+    build: './infrastructure/etc/nginx'
     ports:
       - "80:80"
       - "443:443"
     volumes:
     - ./etc/.bashrc:/root/.bashrc
     - .:/var/www/lpanel/
-    - ./etc/infrastructure/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    - ./etc/infrastructure/nginx/static.conf:/etc/nginx/conf.d/static.conf
-    - ./etc/infrastructure/nginx/ssl/:/etc/ssl/
-    - ./etc/infrastructure/nginx/conf.d:/etc/nginx/conf.d/
+    - ./infrastructure/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    - ./infrastructure/etc/nginx/static.conf:/etc/nginx/conf.d/static.conf
+    - ./infrastructure/etc/nginx/ssl/:/etc/ssl/
+    - ./infrastructure/etc/nginx/conf.d:/etc/nginx/conf.d/
     links:
     - cache
     - db
@@ -36,7 +36,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./etc/infrastructure/redis/redis.conf:/etc/redis/redis.conf
+      - ./infrastructure/etc/redis/redis.conf:/etc/redis/redis.conf
   db:
     image: mariadb:latest
     ports:
