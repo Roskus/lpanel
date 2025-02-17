@@ -8,7 +8,7 @@ use App\Http\Controllers\MainController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserDeleteController extends  MainController
+class UserDeleteController extends MainController
 {
     public function delete(Request $request, int $id)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Website;
@@ -51,7 +53,7 @@ class WebsiteCreate extends Command
 
         $website = Website::where('url', $domain)->first();
         if (! $website) {
-            $website = new Website();
+            $website = new Website;
             $website->url = $domain;
             $website->created_at = now();
         }

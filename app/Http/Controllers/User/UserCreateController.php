@@ -9,11 +9,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class UserCreateController extends  MainController
+class UserCreateController extends MainController
 {
     public function create(Request $request): View
     {
-        $data['user'] = new User();
+        $data['user'] = new User;
 
         return view('user.user', $data);
     }
