@@ -12,7 +12,7 @@ class SiteController extends MainController
 {
     public function index(Request $request)
     {
-        $website = new Website();
+        $website = new Website;
         $data['websites'] = $website->all();
 
         return view('site.index', $data);
@@ -20,7 +20,7 @@ class SiteController extends MainController
 
     public function add(Request $request)
     {
-        $website = new Website();
+        $website = new Website;
         $data['website'] = $website;
 
         return view('site.site', $data);
@@ -45,7 +45,7 @@ class SiteController extends MainController
         ]);
 
         if (empty($request->id)) {
-            $website = new Website();
+            $website = new Website;
             $website->created_at = now();
         } else {
             $website = Website::find($request->id);

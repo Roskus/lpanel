@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('session')) {
+        if (! Schema::hasTable('session')) {
             Schema::create('session', function (Blueprint $table) {
                 $table->string('id')->primary();
                 $table->foreignId('user_id')->nullable()->index();

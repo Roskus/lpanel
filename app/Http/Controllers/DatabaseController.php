@@ -19,7 +19,7 @@ class DatabaseController extends MainController
 
     public function add(Request $request)
     {
-        $database = new Database();
+        $database = new Database;
         $data['database'] = $database;
 
         return view('database.database', $data);
@@ -36,7 +36,7 @@ class DatabaseController extends MainController
     public function save(Request $request)
     {
         if (empty($request->id)) {
-            $database = new Database();
+            $database = new Database;
             $database->created_at = now();
         } else {
             $database = Database::find($request->id);

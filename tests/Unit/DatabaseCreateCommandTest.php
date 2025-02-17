@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class DatabaseCreateCommandTest extends TestCase
 {
-    public function setUp(): void
-    {
-
-    }
+    public function setUp(): void {}
 
     /**
      * A basic unit test example.
@@ -23,8 +20,5 @@ class DatabaseCreateCommandTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function tearDown(): void
-    {
-
-    }
+    public function tearDown(): void {}
 }
