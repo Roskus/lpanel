@@ -15,12 +15,16 @@ class SiteController extends MainController
         $apacheService = new Apache();
         $nginxService = new Nginx();
 
-        $apacheSites = $apacheService->getEnabledSites();
-        $nginxSites = $nginxService->getEnabledSites();
+        $apacheEnabled = $apacheService->getEnabledSites();
+        $apacheAvailable = $apacheService->getAvailableSites();
+        $nginxEnabled = $nginxService->getEnabledSites();
+        $nginxAvailable = $nginxService->getAvailableSites();
 
         $data['websites'] = array_merge(
-            array_map(fn($site) => ['url' => $site, 'type' => 'Apache'], $apacheSites),
-            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx'], $nginxSites)
+            array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'enabled'], $apacheEnabled),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'available'], array_diff($apacheAvailable, $apacheEnabled)),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled'], $nginxEnabled),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available'], array_diff($nginxAvailable, $nginxEnabled))
         );
 
         return view('site.index', $data);

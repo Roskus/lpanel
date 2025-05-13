@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Url</th>
                                 <th>{{ __('Type') }}</th>
+                                <th>{{ __('Status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +33,7 @@
                             <tr>
                                 <td>{{ $site['url'] }}</td>
                                 <td>{{ $site['type'] }}</td>
+                                <td>{{ $site['status'] }}</td>
                             </tr>
                             @endforeach
                         @endif
@@ -40,7 +42,6 @@
                 </div>
             </div>
         </div>
-
     </div><!--./row-->
 </div>
 @endsection

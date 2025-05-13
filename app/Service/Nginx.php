@@ -9,14 +9,14 @@ class Nginx
 
     public function __construct()
     {
-        $this->loadEnabledSites();
-    }
+        $enabled_path = $this->getSitesEnabledPath();
+        if (is_dir($enabled_path)) {
+            $this->enabledSites = array_diff(scandir($enabled_path), ['.', '..']);
+        }
 
-    protected function loadEnabledSites(): void
-    {
-        $path = $this->getSitesEnabledPath();
-        if (is_dir($path)) {
-            $this->enabledSites = array_diff(scandir($path), ['.', '..']);
+        $available_path = $this->getSitesAvailablePath();
+        if (is_dir($available_path)) {
+            $this->availableSites = array_diff(scandir($available_path), ['.', '..']);
         }
     }
 
@@ -24,6 +24,14 @@ class Nginx
     {
         if (file_exists('/etc/os-release') && str_contains(file_get_contents('/etc/os-release'), 'Ubuntu')) {
             return '/etc/nginx/sites-enabled';
+        }
+        return '/etc/nginx/conf.d';
+    }
+
+    protected function getSitesAvailablePath(): string
+    {
+        if (file_exists('/etc/os-release') && str_contains(file_get_contents('/etc/os-release'), 'Ubuntu')) {
+            return '/etc/nginx/sites-available';
         }
         return '/etc/nginx/conf.d';
     }

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -46,5 +44,10 @@ class DatabaseController extends MainController
         $database->save();
 
         return redirect('/database');
+    }
+
+    public function createUser()
+    {
+
     }
 }

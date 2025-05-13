@@ -15,7 +15,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 
 // Website
 Route::get('/site', [App\Http\Controllers\SiteController::class, 'index']);
-Route::get('/site/add', [App\Http\Controllers\SiteController::class, 'add']);
+Route::get('/site/create', [App\Http\Controllers\SiteController::class, 'create']);
 Route::get('/site/edit/{id}', [App\Http\Controllers\SiteController::class, 'edit']);
 Route::post('/site/save', [App\Http\Controllers\SiteController::class, 'save']);
 Route::get('/site/delete/{id}', [App\Http\Controllers\SiteController::class, 'delete']);
@@ -33,6 +33,7 @@ Route::get('/user/delete/{id}', [App\Http\Controllers\User\UserDeleteController:
 
 // Database
 Route::get('/database', [App\Http\Controllers\DatabaseController::class, 'index']);
-Route::get('/database/add', [App\Http\Controllers\DatabaseController::class, 'add']);
+Route::get('/database/create', [App\Http\Controllers\DatabaseController::class, 'create']);
+Route::get('/database/create-user', [App\Http\Controllers\DatabaseController::class, 'createUser']);
 Route::get('/database/edit/{id}', [App\Http\Controllers\DatabaseController::class, 'edit']);
 Route::post('/database/save', [App\Http\Controllers\DatabaseController::class, 'save']);
