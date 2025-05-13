@@ -22,28 +22,34 @@
                     <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Url</th>
+                                <th>{{ __('Url') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @if (!@empty($websites))
+                        @if (!empty($websites))
                             @foreach ($websites as $site)
                             <tr>
                                 <td>{{ $site['url'] }}</td>
                                 <td>{{ $site['type'] }}</td>
                                 <td>
-                                    <span class="@if($site['status'] == 'enabled')text-success@endif">{{ $site['status'] }}</span>
+                                    <span class="{{ $site['status'] === 'enabled' ? 'text-success' : 'text-warning' }}">
+                                        {{ ucfirst($site['status']) }}
+                                    </span>
                                 </td>
                             </tr>
                             @endforeach
+                        @else
+                            <tr>
+                                <td colspan="3" class="text-center">{{ __('No websites found.') }}</td>
+                            </tr>
                         @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div><!--./row-->
+    </div><!-- ./row -->
 </div>
 @endsection
