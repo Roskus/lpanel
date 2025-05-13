@@ -13,6 +13,9 @@ class DatabaseController extends MainController
         $mariaDBService = new MariaDB();
         $data['databases'] = $mariaDBService->listDatabases();
 
+        // Mensaje de éxito si existe en la sesión
+        $data['success_message'] = session('success_message', null);
+
         return view('database.index', $data);
     }
 
@@ -62,5 +65,15 @@ class DatabaseController extends MainController
         $data = [];
         return view('database.user', $data);
     }
-}
 
+    public function delete(Request $request, string $name)
+    {
+        $mariaDBService = new MariaDB();
+
+        // Eliminar la base de datos
+        $mariaDBService->deleteDatabase($name);
+
+        // Mensaje de éxito
+        return redirect('/database')->with('success_message', __('Database ":name" deleted successfully.', ['name' => $name]));
+    }
+}

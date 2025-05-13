@@ -52,5 +52,14 @@ class MariaDB
             throw new \RuntimeException('Error creating database: ' . $e->getMessage());
         }
     }
+
+    public function deleteDatabase(string $name): void
+    {
+        try {
+            $this->connection->exec("DROP DATABASE `$name`");
+        } catch (PDOException $e) {
+            throw new \RuntimeException('Error deleting database: ' . $e->getMessage());
+        }
+    }
 }
 
