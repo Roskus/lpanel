@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="/site/add" class="btn btn-primary mt-2 mb-2">{{ __('Add') }}</a>
+            <a href="/site/create" class="btn btn-primary mt-2 mb-2">{{ __('Create') }}</a>
         </div>
     </div>
     <div class="row">
@@ -33,7 +33,9 @@
                             <tr>
                                 <td>{{ $site['url'] }}</td>
                                 <td>{{ $site['type'] }}</td>
-                                <td>{{ $site['status'] }}</td>
+                                <td>
+                                    <span class="@if($site['status'] == 'enabled')text-success@endif">{{ $site['status'] }}</span>
+                                </td>
                             </tr>
                             @endforeach
                         @endif

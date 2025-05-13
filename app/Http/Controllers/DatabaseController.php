@@ -15,7 +15,7 @@ class DatabaseController extends MainController
         return view('database.index', $data);
     }
 
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $database = new Database;
         $data['database'] = $database;
@@ -48,6 +48,7 @@ class DatabaseController extends MainController
 
     public function createUser()
     {
-
+        $data = [];
+        return view('database.user', $data);
     }
 }

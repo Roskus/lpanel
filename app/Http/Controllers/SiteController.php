@@ -30,7 +30,7 @@ class SiteController extends MainController
         return view('site.index', $data);
     }
 
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $website = new Website;
         $data['website'] = $website;
