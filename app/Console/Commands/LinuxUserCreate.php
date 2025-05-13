@@ -11,7 +11,7 @@ class LinuxUserCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'panel:slinux:user-create';
+    protected $signature = 'panel:linux:user-create';
 
     /**
      * The console command description.
