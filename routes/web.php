@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DatabaseController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
@@ -37,3 +38,4 @@ Route::get('/database/create', [App\Http\Controllers\DatabaseController::class, 
 Route::get('/database/create-user', [App\Http\Controllers\DatabaseController::class, 'createUser']);
 Route::get('/database/edit/{id}', [App\Http\Controllers\DatabaseController::class, 'edit']);
 Route::post('/database/save', [App\Http\Controllers\DatabaseController::class, 'save']);
+Route::delete('/database/delete/{name}', [DatabaseController::class, 'delete'])->name('database.delete');
