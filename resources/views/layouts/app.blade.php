@@ -45,6 +45,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
+                        <div>Version: {{ VERSION  }}</div>
                         <span>Powered by Roskus</span>
                     </div>
                 </div>
