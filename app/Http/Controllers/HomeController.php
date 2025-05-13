@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\File as FileHelper;
 use App\Helpers\Linux;
-use App\Models\Database;
 use App\Models\User;
+use App\Service\Database\MariaDB;
 use App\Service\Webserver\Apache;
 use App\Service\Webserver\Nginx;
 
@@ -33,13 +33,19 @@ class HomeController extends MainController
         $data['server_uptime'] = Linux::getUptime();
         $apacheService = new Apache();
         $nginxService = new Nginx();
+        $mariaDBService = new MariaDB();
 
         $apacheSites = count($apacheService->getEnabledSites());
         $nginxSites = count($nginxService->getEnabledSites());
 
         $data['website_count'] = $apacheSites + $nginxSites;
         $data['user_count'] = User::where('status', User::ACTIVE)->count();
-        $data['database_count'] = Database::where('status', Database::ACTIVE)->count();
+
+        // Obtener bases de datos ignorando las del sistema
+        $systemDatabases = ['mysql', 'information_schema', 'performance_schema', 'sys'];
+        $databases = $mariaDBService->listDatabases();
+        $data['database_count'] = count(array_diff($databases, $systemDatabases));
+
         $data['disk_free'] = FileHelper::formatSize($disk_free);
         $data['disk_total'] = FileHelper::formatSize($disk_total);
         $data['disk_percentage'] = $disk_percentage;

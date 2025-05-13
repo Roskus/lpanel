@@ -20,7 +20,7 @@ class MariaDB
         $port = env('DB_PORT', '3306');
         $username = env('DB_USERNAME', 'root');
         $password = env('DB_PASSWORD', '');
-        
+
         try {
             $this->connection = new PDO("mysql:host=$host;port=$port", $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,7 +33,11 @@ class MariaDB
     {
         try {
             $query = $this->connection->query('SHOW DATABASES');
-            return $query->fetchAll(PDO::FETCH_COLUMN);
+            $databases = $query->fetchAll(PDO::FETCH_COLUMN);
+
+            // Ignorar bases de datos del sistema
+            $systemDatabases = ['mysql', 'information_schema', 'performance_schema', 'sys'];
+            return array_filter($databases, fn($db) => !in_array($db, $systemDatabases));
         } catch (PDOException $e) {
             throw new \RuntimeException('Error listing databases: ' . $e->getMessage());
         }
