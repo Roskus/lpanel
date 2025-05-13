@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="/database/add" class="btn btn-primary mt-2 mb-2">{{ __('Add') }}</a>
+            <a href="/database/create" class="btn btn-primary mt-2 mb-2">{{ __('Create') }}</a>
         </div>
     </div>
     <div class="row">

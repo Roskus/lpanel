@@ -42,4 +42,15 @@ class MariaDB
             throw new \RuntimeException('Error listing databases: ' . $e->getMessage());
         }
     }
+
+    public function createDatabase(string $name): void
+    {
+        try {
+            $query = $this->connection->prepare("CREATE DATABASE IF NOT EXISTS `$name`");
+            $query->execute();
+        } catch (PDOException $e) {
+            throw new \RuntimeException('Error creating database: ' . $e->getMessage());
+        }
+    }
 }
+

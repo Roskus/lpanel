@@ -1,3 +1,3 @@
 <?php
 
-const VERSION = '2.2.6';
+const VERSION = '2.2.8';

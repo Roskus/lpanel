@@ -34,12 +34,22 @@ class DatabaseController extends MainController
 
     public function save(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $mariaDBService = new MariaDB();
+
         if (empty($request->id)) {
             $database = new Database;
             $database->created_at = now();
+
+            // Crear la base de datos si no existe
+            $mariaDBService->createDatabase($request->name);
         } else {
             $database = Database::find($request->id);
         }
+
         $database->name = $request->name;
         $database->updated_at = now();
         $database->save();
@@ -53,3 +63,4 @@ class DatabaseController extends MainController
         return view('database.user', $data);
     }
 }
+

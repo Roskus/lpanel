@@ -12,22 +12,24 @@
         <input type="hidden" name="id" value="{{ $database->id }}">
         <div class="row form-group">
             <div class="col">
-                <label>{{ __('Name') }}</label>
+                <label for="name">{{ __('Name') }}</label>
                 <input type="text" name="name" id="name" value="{{ $database->name }}" required maxlength="50" class="form-control">
             </div>
             <div class="col">
-                <label class="">{{ __('Type') }}</label>
+                <label for="type" class="">{{ __('Type') }}</label>
                 <select name="type" required class="form-control">
                     <option value=""></option>
+                    <option value="mariadb">MariaDB</option>
                     <option value="mysql">MySQL/MariaDB</option>
                     <option value="postgres">PostgreSQL</option>
+                    <option value="sqlserver">SQLServer</option>
                 </select>
             </div>
         </div>
         <div class="row form-group">
             <div class="col">
                 <button type="submit" class="btn btn-primary btn-icon-split">
-                    <span class="text">Guardar</span>
+                    <span class="text">{{ __('Save') }}</span>
                     <span class="icon text-white-50">
                         <i class="far fa-save"></i>
                     </span>
