@@ -7,6 +7,8 @@ use App\Helpers\Linux;
 use App\Models\Database;
 use App\Models\User;
 use App\Models\Website;
+use App\Service\Apache;
+use App\Service\Nginx;
 
 class HomeController extends MainController
 {
@@ -30,7 +32,13 @@ class HomeController extends MainController
         $data['webserver_name'] = $webServerName;
         $data['php_version'] = phpversion();
         $data['server_uptime'] = Linux::getUptime();
-        $data['website_count'] = Website::where('status', Website::ACTIVE)->count();
+        $apacheService = new Apache();
+        $nginxService = new Nginx();
+
+        $apacheSites = count($apacheService->getEnabledSites());
+        $nginxSites = count($nginxService->getEnabledSites());
+
+        $data['website_count'] = $apacheSites + $nginxSites;
         $data['user_count'] = User::where('status', User::ACTIVE)->count();
         $data['database_count'] = Database::where('status', Database::ACTIVE)->count();
         $data['disk_free'] = FileHelper::formatSize($disk_free);
@@ -40,3 +48,4 @@ class HomeController extends MainController
         return view('dashboard', $data);
     }
 }
+
