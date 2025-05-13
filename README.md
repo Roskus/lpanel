@@ -1,4 +1,4 @@
-# LPanel: Webhosting Panel
+# LPanel: Web Hosting Panel
 
 Open Source web hosting panel based in Laravel
 
@@ -41,43 +41,43 @@ make install
 ### User panel create
 
 ```terminal
-php artisan user:create
+php artisan panel:user:create
 ```
 
 ### Create a website virtual host by default create a nginx virtualhost
 
 ```terminal
-php artisan website:create domain.com
+php artisan panel:website:create domain.com
 ```
 
 ### Create a website virtual host with apache virtualhost
 
 ```terminal
-php artisan website:create domain_data server=apache
+php artisan panel:website:create domain_data server=apache
 ```
 
 ### Create a database by default use MariaDB
 
 ```terminal
-php artisan database:create dbname
+php artisan panel:database:create dbname
 ```
 
 ### Create a database by type
 
 ```terminal
-php artisan database:create dbname type=postgresql
+php artisan panel:database:create dbname type=postgresql
 ```
 
 ### Create a database user
 
 ```terminal
-php artisan database:user-create
+php artisan panel:database:user-create
 ```
 
 ### Create a linux user
 
 ```terminal
-php artisan linux:user-create name
+php artisan panel:linux:user-create name
 ```
 
 ## Tests

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -15,7 +13,7 @@ class WebsiteCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'website:create {domain} {server=nginx : Webserver by default nginx} {php=8.1}';
+    protected $signature = 'panel:website:create {domain} {server=nginx : Webserver by default nginx} {php=8.1}';
 
     /**
      * The console command description.

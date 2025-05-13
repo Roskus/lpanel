@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -16,7 +14,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'lpanel:install';
+    protected $signature = 'panel:install';
 
     /**
      * The console command description.

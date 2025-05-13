@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -15,7 +13,7 @@ class UserCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'user:create';
+    protected $signature = 'panel:user:create';
 
     /**
      * The console command description.
