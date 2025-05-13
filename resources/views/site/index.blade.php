@@ -24,28 +24,14 @@
                             <tr>
                                 <th>Url</th>
                                 <th>{{ __('Type') }}</th>
-                                <th>{{ __('Status') }}</th>
-                                <th>{{ __('Created at') }}</th>
-                                <th>{{ __('Updated at') }}</th>
-                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                         @if (!@empty($websites))
                             @foreach ($websites as $site)
                             <tr>
-                                <td>
-                                    <a href="/site/edit/{{ $site->id }}">{{ $site->url }}</a>
-                                </td>
-                                <td>{{ $site->type }}</td>
-                                <td>{{ $site->status }}</td>
-                                <td>{{ $site->created_at->format('d/m/Y') }}</td>
-                                <td>{{ $site->updated_at->format('d/m/Y') }}</td>
-                                <td>
-                                    <a href="/site/delete/{{ $site->id }}" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
+                                <td>{{ $site['url'] }}</td>
+                                <td>{{ $site['type'] }}</td>
                             </tr>
                             @endforeach
                         @endif

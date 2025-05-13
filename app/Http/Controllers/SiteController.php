@@ -1,10 +1,10 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Models\Website;
+use App\Service\Apache;
+use App\Service\Nginx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
@@ -12,8 +12,16 @@ class SiteController extends MainController
 {
     public function index(Request $request)
     {
-        $website = new Website;
-        $data['websites'] = $website->all();
+        $apacheService = new Apache();
+        $nginxService = new Nginx();
+
+        $apacheSites = $apacheService->getEnabledSites();
+        $nginxSites = $nginxService->getEnabledSites();
+
+        $data['websites'] = array_merge(
+            array_map(fn($site) => ['url' => $site, 'type' => 'Apache'], $apacheSites),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx'], $nginxSites)
+        );
 
         return view('site.index', $data);
     }
@@ -84,3 +92,4 @@ class SiteController extends MainController
         return redirect('/site');
     }
 }
+
