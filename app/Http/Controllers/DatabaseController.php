@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Database;
+use App\Service\Database\MariaDB;
 use Illuminate\Http\Request;
 
 class DatabaseController extends MainController
 {
-    //
     public function index(Request $request)
     {
-        $data['databases'] = Database::all();
+        $mariaDBService = new MariaDB();
+        $data['databases'] = $mariaDBService->listDatabases();
 
         return view('database.index', $data);
     }

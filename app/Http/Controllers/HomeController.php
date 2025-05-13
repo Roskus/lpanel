@@ -6,9 +6,8 @@ use App\Helpers\File as FileHelper;
 use App\Helpers\Linux;
 use App\Models\Database;
 use App\Models\User;
-use App\Models\Website;
-use App\Service\Apache;
-use App\Service\Nginx;
+use App\Service\Webserver\Apache;
+use App\Service\Webserver\Nginx;
 
 class HomeController extends MainController
 {

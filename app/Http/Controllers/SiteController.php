@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Website;
-use App\Service\Apache;
-use App\Service\Nginx;
+use App\Service\Webserver\Apache;
+use App\Service\Webserver\Nginx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
