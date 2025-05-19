@@ -61,5 +61,43 @@ class MariaDB
             throw new \RuntimeException('Error deleting database: ' . $e->getMessage());
         }
     }
+
+    public function listUsers(): array
+    {
+        $query = $this->connection->query("SELECT User, Host FROM mysql.user WHERE User NOT IN ('mysql.session','mysql.sys','root')");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUser(string $username, string $host): ?array
+    {
+        $stmt = $this->connection->prepare("SELECT User as username, Host as host FROM mysql.user WHERE User = ? AND Host = ?");
+        $stmt->execute([$username, $host]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function createUser(string $username, string $host, string $password, string $privileges, ?string $database = null): void
+    {
+        $db = $database ? "`$database`.*" : "*.*";
+        $this->connection->exec("CREATE USER '$username'@'$host' IDENTIFIED BY '$password'");
+        $this->connection->exec("GRANT $privileges ON $db TO '$username'@'$host'");
+        $this->connection->exec("FLUSH PRIVILEGES");
+    }
+
+    public function updateUser(string $username, string $host, ?string $password, string $privileges, ?string $database = null): void
+    {
+        $db = $database ? "`$database`.*" : "*.*";
+        if ($password) {
+            $this->connection->exec("ALTER USER '$username'@'$host' IDENTIFIED BY '$password'");
+        }
+        $this->connection->exec("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$username'@'$host'");
+        $this->connection->exec("GRANT $privileges ON $db TO '$username'@'$host'");
+        $this->connection->exec("FLUSH PRIVILEGES");
+    }
+
+    public function deleteUser(string $username, string $host): void
+    {
+        $this->connection->exec("DROP USER '$username'@'$host'");
+        $this->connection->exec("FLUSH PRIVILEGES");
+    }
 }
 

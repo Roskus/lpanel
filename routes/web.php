@@ -36,6 +36,10 @@ Route::get('/user/delete/{id}', [App\Http\Controllers\User\UserDeleteController:
 Route::get('/database', [App\Http\Controllers\DatabaseController::class, 'index']);
 Route::get('/database/create', [App\Http\Controllers\DatabaseController::class, 'create']);
 Route::get('/database/create-user', [App\Http\Controllers\DatabaseController::class, 'createUser']);
+Route::post('/database/save-user', [App\Http\Controllers\DatabaseController::class, 'saveUser']);
+Route::get('/database/users', [App\Http\Controllers\DatabaseController::class, 'listUsers']);
+Route::get('/database/edit-user/{username}/{host}', [App\Http\Controllers\DatabaseController::class, 'editUser']);
+Route::delete('/database/delete-user/{username}/{host}', [App\Http\Controllers\DatabaseController::class, 'deleteUser']);
 Route::get('/database/edit/{id}', [App\Http\Controllers\DatabaseController::class, 'edit']);
 Route::post('/database/save', [App\Http\Controllers\DatabaseController::class, 'save']);
 Route::delete('/database/delete/{name}', [DatabaseController::class, 'delete'])->name('database.delete');

@@ -60,10 +60,52 @@ class DatabaseController extends MainController
         return redirect('/database');
     }
 
+    public function listUsers()
+    {
+        $mariaDBService = new MariaDB();
+        $data['users'] = $mariaDBService->listUsers();
+        $data['success_message'] = session('success_message', null);
+        return view('database.users', $data);
+    }
+
     public function createUser()
     {
         $data = [];
         return view('database.user', $data);
+    }
+
+    public function saveUser(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:32',
+            'host' => 'required|string|max:64',
+            'password' => 'required_without:id|nullable|string|min:4',
+            'confirm_password' => 'same:password',
+            'privileges' => 'required|string',
+        ]);
+        $mariaDBService = new MariaDB();
+        if (empty($request->id)) {
+            $mariaDBService->createUser($request->username, $request->host, $request->password, $request->privileges, $request->database);
+            $msg = __('User created successfully.');
+        } else {
+            $mariaDBService->updateUser($request->username, $request->host, $request->password, $request->privileges, $request->database);
+            $msg = __('User updated successfully.');
+        }
+        return redirect('/database/users')->with('success_message', $msg);
+    }
+
+    public function editUser($username, $host)
+    {
+        $mariaDBService = new MariaDB();
+        $data['user'] = $mariaDBService->getUser($username, $host);
+        return view('database.user', $data);
+    }
+
+    public function deleteUser($username, $host)
+    {
+        $mariaDBService = new MariaDB();
+        $mariaDBService->deleteUser($username, $host);
+        return redirect('/database/users')->with('success_message', __('User deleted successfully.'));
     }
 
     public function delete(Request $request, string $name)
