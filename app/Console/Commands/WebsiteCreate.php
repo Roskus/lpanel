@@ -41,13 +41,13 @@ class WebsiteCreate extends Command
     {
         $status = 0; //success
         $domain = $this->argument('domain');
-        $server = $this->argument('server');
+        $server = $this->argument('server', 'nginx');
 
         $domain = str_replace('domain=', '', $domain);
         $server = str_replace('server=', '', $server);
         $server = str_replace('--server=', '', $server);
 
-        $php_version = $this->argument('php');
+        $php_version = $this->argument('php', phpversion());
 
         $website = Website::where('url', $domain)->first();
         if (! $website) {
