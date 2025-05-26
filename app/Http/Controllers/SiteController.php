@@ -66,7 +66,7 @@ class SiteController extends MainController
         $url = str_replace('http://', '', $url);
         $url = str_replace('https://', '', $url);
         $website->url = $url;
-        $alias = trim($request->alias);
+        $alias = $request->alias ? trim($request->alias) :'';
         $alias = \str_replace("\r", '', $alias);
         $alias = \explode("\n", $alias);
         $website->alias = json_encode($alias);
@@ -82,7 +82,7 @@ class SiteController extends MainController
             'domain' => $url,
             'server' => $request->type,
         ];
-        Artisan::call('website:create', $params);
+        Artisan::call('panel:website:create', $params);
 
         return redirect('/site');
     }
