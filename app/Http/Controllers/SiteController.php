@@ -56,15 +56,20 @@ class SiteController extends MainController
             'type' => 'required',
         ]);
 
-        if (empty($request->id)) {
-            $website = new Website;
-            $website->created_at = now();
-        } else {
-            $website = Website::find($request->id);
-        }
         $url = $request->url;
         $url = str_replace('http://', '', $url);
         $url = str_replace('https://', '', $url);
+
+
+        if (empty($request->id)) {
+            $website = Website::where('url', $url)->find();
+            if (!$website) {
+                $website = new Website;
+                $website->created_at = now();
+            }
+        } else {
+            $website = Website::find($request->id);
+        }
         $website->url = $url;
         $alias = $request->alias ? trim($request->alias) :'';
         $alias = \str_replace("\r", '', $alias);
