@@ -62,7 +62,7 @@ class SiteController extends MainController
 
 
         if (empty($request->id)) {
-            $website = Website::where('url', $url)->find();
+            $website = Website::where('url', $url)->get();
             if (!$website) {
                 $website = new Website;
                 $website->created_at = now();
