@@ -7,6 +7,13 @@
             <h1 class="h3 mb-0 text-gray-800 pb-3"><i class="fas fa-fw fa-sitemap"></i> {{ __('Websites') }}</h1>
         </div>
     </div>
+    @if ($errors->any())
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger">{{ $errors->first() }}</div>
+        </div>
+    </div>
+    @endif
     <div class="row">
         <div class="col">
             <a href="/site/create" class="btn btn-primary mt-2 mb-2">{{ __('Create') }}</a>
@@ -25,6 +32,7 @@
                                 <th>{{ __('Url') }}</th>
                                 <th>{{ __('Type') }}</th>
                                 <th>{{ __('Status') }}</th>
+                                <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,11 +46,22 @@
                                         {{ ucfirst($site['status']) }}
                                     </span>
                                 </td>
+                                <td>
+                                    @if (!empty($site['domain']))
+                                    <form method="post" action="/site/{{ $site['status'] === 'enabled' ? 'disable' : 'enable' }}">
+                                        @csrf
+                                        <input type="hidden" name="domain" value="{{ $site['domain'] }}">
+                                        <button type="submit" class="btn btn-sm {{ $site['status'] === 'enabled' ? 'btn-warning' : 'btn-success' }}">
+                                            {{ $site['status'] === 'enabled' ? __('Disable') : __('Enable') }}
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="3" class="text-center">{{ __('No websites found.') }}</td>
+                                <td colspan="4" class="text-center">{{ __('No websites found.') }}</td>
                             </tr>
                         @endif
                         </tbody>

@@ -12,6 +12,7 @@ Auth::routes([
     'register' => (env('APP_ENV') != 'production') ? true : false, // Registration Routes...
 ]);
 
+Route::get('/phpinfo', [App\Http\Controllers\HomeController::class, 'phpinfo']);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 // Website
@@ -19,6 +20,8 @@ Route::get('/site', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/site/create', [App\Http\Controllers\SiteController::class, 'create']);
 Route::get('/site/edit/{id}', [App\Http\Controllers\SiteController::class, 'edit']);
 Route::post('/site/save', [App\Http\Controllers\SiteController::class, 'save']);
+Route::post('/site/enable', [App\Http\Controllers\SiteController::class, 'enable']);
+Route::post('/site/disable', [App\Http\Controllers\SiteController::class, 'disable']);
 Route::get('/site/delete/{id}', [App\Http\Controllers\SiteController::class, 'delete']);
 
 // Profile

@@ -7,6 +7,7 @@ use App\Service\Webserver\Apache;
 use App\Service\Webserver\Nginx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class SiteController extends MainController
 {
@@ -23,8 +24,8 @@ class SiteController extends MainController
         $data['websites'] = array_merge(
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'enabled'], $apacheEnabled),
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'available'], array_diff($apacheAvailable, $apacheEnabled)),
-            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled'], $nginxEnabled),
-            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available'], array_diff($nginxAvailable, $nginxEnabled))
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled', 'domain' => basename($site, '.conf')], $nginxEnabled),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available', 'domain' => basename($site, '.conf')], array_diff($nginxAvailable, $nginxEnabled))
         );
 
         return view('site.index', $data);
@@ -53,13 +54,15 @@ class SiteController extends MainController
     {
         $request->validate([
             //url' => 'required|unique:website|max:255',
-            'type' => 'required',
+            'type' => 'required|in:nginx,apache',
         ]);
 
         $url = $request->url;
         $url = str_replace('http://', '', $url);
         $url = str_replace('https://', '', $url);
 
+
+        DB::beginTransaction();
 
         if (empty($request->id)) {
             $website = Website::where('url', $url)->first();
@@ -71,12 +74,10 @@ class SiteController extends MainController
             $website = Website::find($request->id);
         }
         $website->url = $url;
-        $alias = $request->alias ? trim($request->alias) :'';
-        $alias = \str_replace("\r", '', $alias);
-        $alias = \explode("\n", $alias);
-        $website->alias = json_encode($alias);
+        $alias = \str_replace(['http://', 'https://', "\r"], '', (string) $request->alias);
+        $alias = \array_filter(\array_map('trim', \explode("\n", $alias)));
+        $website->alias = json_encode(\array_values($alias));
         $website->type = $request->type;
-        $website->http = (empty($request->protocols['http'])) ? false : true;
         $website->https = (empty($request->protocols['https'])) ? false : true;
         $website->http2https = (empty($request->protocols['http2https'])) ? false : true;
         $website->lets_encrypt = (empty($request->protocols['lets_encrypt'])) ? false : true;
@@ -87,7 +88,32 @@ class SiteController extends MainController
             'domain' => $url,
             'server' => $request->type,
         ];
-        Artisan::call('panel:website:create', $params);
+        if (Artisan::call('panel:website:create', $params) !== 0) {
+            DB::rollBack();
+
+            return back()->withInput()->withErrors(['url' => trim(Artisan::output())]);
+        }
+
+        DB::commit();
+
+        return redirect('/site');
+    }
+
+    public function enable(Request $request)
+    {
+        return $this->callStateCommand('panel:website:enable', (string) $request->domain);
+    }
+
+    public function disable(Request $request)
+    {
+        return $this->callStateCommand('panel:website:disable', (string) $request->domain);
+    }
+
+    private function callStateCommand(string $command, string $domain)
+    {
+        if (Artisan::call($command, ['domain' => $domain]) !== 0) {
+            return redirect('/site')->withErrors(['domain' => trim(Artisan::output())]);
+        }
 
         return redirect('/site');
     }

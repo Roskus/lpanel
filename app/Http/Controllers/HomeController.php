@@ -12,6 +12,17 @@ use App\Service\Webserver\Nginx;
 class HomeController extends MainController
 {
     /**
+     * Show the PHP configuration, without environment and variables because they contain secrets.
+     */
+    public function phpinfo()
+    {
+        ob_start();
+        phpinfo(INFO_GENERAL | INFO_CONFIGURATION | INFO_MODULES);
+
+        return response(ob_get_clean());
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable

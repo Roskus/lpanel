@@ -68,6 +68,32 @@ return [
 
     'webserver_path' => env('WEBSERVER_PATH', '/etc'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Websites Path
+    |--------------------------------------------------------------------------
+    |
+    | Directory that holds the websites, each one is created inside of it
+    | with a public folder, for example in /var/www/domain.com/public.
+    |
+    */
+
+    'websites_path' => env('WEBSITES_PATH', '/var/www'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Websites SSL Certificate
+    |--------------------------------------------------------------------------
+    |
+    | Certificate used by the virtual hosts to listen on port 443. When it is
+    | empty the websites are created only with HTTP.
+    |
+    */
+
+    'website_ssl_certificate' => env('WEBSITE_SSL_CERTIFICATE'),
+
+    'website_ssl_certificate_key' => env('WEBSITE_SSL_CERTIFICATE_KEY'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
