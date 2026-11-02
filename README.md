@@ -111,6 +111,8 @@ By default uses the running PHP version
 php artisan panel:website:create domain.com nginx 8.4
 ```
 
+The virtual host uses the socket `/var/run/php/php8.4-fpm.sock`, that version must be installed in the server. The docker image only has PHP 8.5, any other version returns a 502 error.
+
 The virtual host is written to `sites-available` and enabled in `sites-enabled`, or to `conf.d` when the server does not have `sites-available`. The base path is `/etc`, set `WEBSERVER_PATH` to change it. The website directory is created in `/var/www/domain.com/public`, set `WEBSITES_PATH` to change the base path, existing files are kept. A basic `index.php` with a welcome message is added when the website has no index.
 
 Websites listen on HTTPS when `WEBSITE_SSL_CERTIFICATE` and `WEBSITE_SSL_CERTIFICATE_KEY` are set, otherwise only on HTTP. Docker uses the certificate from `make cert`. The configuration is checked with `nginx -t` and nginx is reloaded, if the check fails the previous state is restored.
