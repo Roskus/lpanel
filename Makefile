@@ -7,10 +7,10 @@ SSL_DOMAIN = localhost
 SSL_DAYS = 825
 
 .DEFAULT_GOAL := help
-.PHONY: help env install up build ssh cert
+.PHONY: help env install up build ssh cert permissions
 
 help: ## List the available commands
-	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-10s %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-12s %s\n", $$1, $$2}'
 
 env: ## Create .env, asks before overwriting an existing one
 	@if [ ! -f .env ]; then \
@@ -20,7 +20,7 @@ env: ## Create .env, asks before overwriting an existing one
 		printf ".env already exists. Overwrite it? A copy is saved in .env.backup [y/N] "; \
 		read -r answer || true; \
 		if [ "$$answer" = "y" ] || [ "$$answer" = "Y" ]; then \
-			cp .env .env.backup; \
+			cp .env .env.backup || exit 1; \
 			cp .env.example .env; \
 			echo ".env overwritten, previous version in .env.backup"; \
 		else \
@@ -30,7 +30,7 @@ env: ## Create .env, asks before overwriting an existing one
 
 install: env ## Install the application
 	composer install
-	grep -q '^APP_KEY=base64:' .env || php artisan key:generate
+	grep -Eq '^APP_KEY="?[^"[:space:]]' .env || php artisan key:generate
 	docker compose exec php php artisan migrate
 	docker compose exec php php artisan panel:install
 
@@ -50,5 +50,11 @@ cert: ## Generate a self-signed SSL certificate
 		-keyout $(SSL_PATH)/private/$(SSL_DOMAIN).key \
 		-out $(SSL_PATH)/certs/$(SSL_DOMAIN).crt \
 		-subj "/CN=$(SSL_DOMAIN)" \
-		-addext "subjectAltName=DNS:$(SSL_DOMAIN),DNS:*.$(SSL_DOMAIN),IP:127.0.0.1"
+		-addext "subjectAltName=DNS:$(SSL_DOMAIN),DNS:*.$(SSL_DOMAIN),DNS:*.lpanel.$(SSL_DOMAIN),IP:127.0.0.1"
 	chmod 600 $(SSL_PATH)/private/$(SSL_DOMAIN).key
+
+permissions: ## Fix the folders php-fpm writes to, the containers must be running
+	docker compose exec -T php chown -R www-data:www-data storage bootstrap/cache /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
+	docker compose exec -T php chmod -R ug+rwX storage bootstrap/cache /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
+	docker compose exec -T php chown www-data:www-data /var/www
+	docker compose exec -T php find /var/www -mindepth 1 -maxdepth 1 ! -name lpanel -exec chown -R www-data:www-data {} +
