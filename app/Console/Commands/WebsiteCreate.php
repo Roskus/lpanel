@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Website;
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
 
 class WebsiteCreate extends Command
 {
@@ -13,14 +12,14 @@ class WebsiteCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'panel:website:create {domain} {server=nginx : Webserver by default nginx} {php=8.1}';
+    protected $signature = 'panel:website:create {domain} {server=nginx : Webserver by default nginx} {php? : PHP version by default the running one}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create and configure website in webserver. Generate virtualhost. Usage: website:create {domain} {--server=nginx}';
+    protected $description = 'Create and configure website in webserver. Generate virtualhost. Usage: panel:website:create {domain} {server=nginx} {php?}';
 
     /**
      * Create a new command instance.
@@ -39,38 +38,42 @@ class WebsiteCreate extends Command
      */
     public function handle()
     {
-        $status = 0; //success
-        $domain = $this->argument('domain');
-        $server = $this->argument('server', 'nginx');
+        $domain = str_replace('domain=', '', $this->argument('domain'));
+        $server = str_replace(['--server=', 'server='], '', $this->argument('server'));
+        $php_version = str_replace('php=', '', (string) $this->argument('php'));
+        $php_version = $php_version ?: PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;
 
-        $domain = str_replace('domain=', '', $domain);
-        $server = str_replace('server=', '', $server);
-        $server = str_replace('--server=', '', $server);
+        // The domain ends up in a file path and in the webserver config
+        if (! preg_match('/^[a-z0-9]([a-z0-9._-]*[a-z0-9])?$/iD', $domain)) {
+            $this->error("Invalid domain: $domain");
 
-        $php_version = $this->argument('php', phpversion());
-
-        $website = Website::where('url', $domain)->first();
-        if (! $website) {
-            $website = new Website;
-            $website->url = $domain;
-            $website->created_at = now();
-        }
-        $website->type = $server;
-        $website->updated_at = now();
-        $website->status = Website::ACTIVE;
-        $website->save();
-
-        if ($server == 'nginx') {
-            $template = resource_path('templates/config/nginx/site_php.conf');
+            return self::FAILURE;
         }
 
-        $destination = "/etc/$server";
-        if (is_dir("/etc/$server/sites-available")) {
-            $destination = "/etc/$server/sites-available/$domain.conf";
+        if (! preg_match('/^\d+\.\d+$/D', $php_version)) {
+            $this->error("Invalid PHP version: $php_version");
+
+            return self::FAILURE;
         }
 
-        if (is_dir("/etc/$server/conf.d")) {
-            $destination = "/etc/$server/conf.d/$domain.conf";
+        // TODO: add apache template
+        if ($server != 'nginx') {
+            $this->error("Unsupported webserver: $server");
+
+            return self::FAILURE;
+        }
+
+        $template = resource_path('templates/config/nginx/site_php.conf');
+
+        $config_path = config('app.webserver_path')."/$server";
+        $sites_available = "$config_path/sites-available";
+        $sites_enabled = "$config_path/sites-enabled";
+
+        // Ubuntu has both directories, conf.d alone would skip sites-enabled
+        if (is_dir($sites_available)) {
+            $destination = "$sites_available/$domain.conf";
+        } else {
+            $destination = "$config_path/conf.d/$domain.conf";
         }
 
         $template_content = file_get_contents($template);
@@ -80,23 +83,33 @@ class WebsiteCreate extends Command
 
         try {
             file_put_contents($destination, $template_content);
-            $this->info('Virtual host created successfully');
+
+            // Enable virtual host
+            if (is_dir($sites_available) && ! is_link("$sites_enabled/$domain.conf")) {
+                symlink($destination, "$sites_enabled/$domain.conf");
+            }
         } catch (\Throwable $th) {
-            //throw $th;
             $this->error("Error creating vhost in: $destination");
-            $status = -1;
+
+            return self::FAILURE;
         }
 
-        // Enable virtual host
-        if (is_dir("/etc/$server/sites-available")) {
-            $virtual_host_path = "/etc/$server/sites-enabled/";
-            chdir($virtual_host_path);
-            $process = new Process(['ln', '-s', $destination]);
-            $process->run();
+        $website = Website::withTrashed()->where('url', $domain)->first();
+        if (! $website) {
+            $website = new Website;
+            $website->url = $domain;
+            $website->created_at = now();
         }
+        $website->deleted_at = null;
+        $website->type = $server;
+        $website->updated_at = now();
+        $website->status = Website::ACTIVE;
+        $website->save();
+
+        $this->info('Virtual host created successfully');
 
         // TODO: check nginx -t
         // TODO: service nginx reload
-        return $status;
+        return self::SUCCESS;
     }
 }

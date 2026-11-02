@@ -56,6 +56,18 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Webserver Path
+    |--------------------------------------------------------------------------
+    |
+    | Directory that holds the webserver configuration, the virtual hosts
+    | are written inside of it, for example in /etc/nginx/conf.d.
+    |
+    */
+
+    'webserver_path' => env('WEBSERVER_PATH', '/etc'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
