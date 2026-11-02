@@ -14,29 +14,76 @@ Open Source web hosting panel based in Laravel
 
 * Virtual Host administration
   * Nginx
-  * Apache
+  * Apache (sites are listed only, creating a virtual host is not supported yet)
 * Database administration
   * MariaDB / MySQL
   * Postgres
 * Linux user administration
 
-## Setup docker
-```terminal
-docker-compose build
-docker-compose up -d
-```
+## Requirements
+
+* Docker with Docker Compose
+* Make
+* PHP 8.4 or higher and Composer
+* OpenSSL
 
 ## Setup
+
 Clone project
 ```terminal
 git clone git@github.com:Roskus/lpanel.git
+cd lpanel
 ```
-Just run make
+
+Create the `.env` file, docker compose reads the database name from it
+```terminal
+make env
+```
+
+Generate the self-signed SSL certificate, it is not stored in the repository and nginx needs it to start
+```terminal
+make cert
+```
+
+Start the containers. Ports 80 and 443 must be free, stop any webserver running in the host first
+```terminal
+make build
+```
+
+Install the application, the containers must be running
 ```terminal
 make install
 ```
 
+`make install` asks before overwriting an existing `.env`, answer `n` to keep it. If you answer `y` a copy is saved in `.env.backup`.
+
+Create the first panel user
+```terminal
+docker compose exec php php artisan panel:user:create
+```
+
+Open https://lpanel.localhost and accept the browser warning for the self-signed certificate.
+
+## Make
+
+Run `make` to list the available commands
+
+| Command        | Description                                          |
+|----------------|------------------------------------------------------|
+| `make help`    | List the available commands                          |
+| `make env`     | Create .env, asks before overwriting an existing one |
+| `make install` | Install the application                              |
+| `make up`      | Start and run the application                        |
+| `make build`   | Build and start                                      |
+| `make ssh`     | Connect into php container                           |
+| `make cert`    | Generate a self-signed SSL certificate               |
+
+The certificate is created for `localhost` by default, use `make cert SSL_DOMAIN=example.localhost SSL_DAYS=365` to change it.
+Nginx loads `localhost.crt` and `localhost.key`, update `infrastructure/etc/nginx/default.conf` and `static.conf` when you use another domain.
+
 ## Commands
+
+Run the commands inside the php container, `make ssh`, because the database host `db` only resolves there.
 
 ### User panel create
 
@@ -50,39 +97,37 @@ php artisan panel:user:create
 php artisan panel:website:create domain.com
 ```
 
-### Create a website virtual host with apache virtualhost
+### Create a website virtual host with a specific PHP version
+
+By default uses the running PHP version
 
 ```terminal
-php artisan panel:website:create domain_data server=apache
+php artisan panel:website:create domain.com nginx 8.4
 ```
 
-### Create a database by default use MariaDB
+The virtual host is written to `sites-available` and enabled in `sites-enabled`, or to `conf.d` when the server does not have `sites-available`. The base path is `/etc`, set `WEBSERVER_PATH` to change it. Reload the webserver afterwards to apply the changes.
+
+### Create a database in MariaDB / MySQL
 
 ```terminal
 php artisan panel:database:create dbname
 ```
 
-### Create a database by type
-
-```terminal
-php artisan panel:database:create dbname type=postgresql
-```
-
 ### Create a database user
 
 ```terminal
-php artisan panel:database:user-create
+php artisan panel:database:user-create username dbname
 ```
 
 ### Create a linux user
 
 ```terminal
-php artisan panel:linux:user-create name
+php artisan panel:linux:user-create
 ```
 
 ## Tests
 
-Run tests
+Run tests, they use an in-memory SQLite database
 ```terminal
 php artisan test
 ```
