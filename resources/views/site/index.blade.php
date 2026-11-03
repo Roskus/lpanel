@@ -46,7 +46,10 @@
                                         {{ ucfirst($site['status']) }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="d-flex">
+                                    @if (!empty($site['id']))
+                                    <a href="/site/edit/{{ $site['id'] }}" class="btn btn-sm btn-primary mr-2">{{ __('Edit') }}</a>
+                                    @endif
                                     @if (!empty($site['domain']))
                                     <form method="post" action="/site/{{ $site['status'] === 'enabled' ? 'disable' : 'enable' }}">
                                         @csrf

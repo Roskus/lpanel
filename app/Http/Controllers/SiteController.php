@@ -21,11 +21,18 @@ class SiteController extends MainController
         $nginxEnabled = $nginxService->getEnabledSites();
         $nginxAvailable = $nginxService->getAvailableSites();
 
-        $data['websites'] = array_merge(
+        $stored = Website::pluck('id', 'url');
+        $websites = array_merge(
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'enabled'], $apacheEnabled),
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'available'], array_diff($apacheAvailable, $apacheEnabled)),
             array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled', 'domain' => $nginxService->getSiteDomain($site)], $nginxEnabled),
             array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available', 'domain' => $nginxService->getSiteDomain($site)], array_diff($nginxAvailable, $nginxEnabled))
+        );
+
+        // Only websites stored by the panel can be edited
+        $data['websites'] = array_map(
+            fn($site) => $site + ['id' => $stored[basename($site['url'], '.conf')] ?? null],
+            $websites
         );
 
         return view('site.index', $data);
@@ -41,7 +48,7 @@ class SiteController extends MainController
 
     public function edit(Request $request, int $id)
     {
-        $website = Website::find($id);
+        $website = Website::findOrFail($id);
         $data['website'] = $website;
 
         return view('site.site', $data);
@@ -70,10 +77,12 @@ class SiteController extends MainController
                 $website = new Website;
                 $website->created_at = now();
             }
+            $website->url = $url;
         } else {
-            $website = Website::find($request->id);
+            // The rename command moves the vhost and folder and then changes the url
+            $website = Website::findOrFail($request->id);
         }
-        $website->url = $url;
+        $current_url = $website->url;
         $alias = \str_replace(['http://', 'https://', "\r"], '', (string) $request->alias);
         $alias = \array_filter(\array_map('trim', \explode("\n", $alias)));
         $website->alias = json_encode(\array_values($alias));
@@ -84,11 +93,14 @@ class SiteController extends MainController
         $website->updated_at = now();
         $website->save();
 
-        $params = [
-            'domain' => $url,
-            'server' => $request->type,
-        ];
-        if (Artisan::call('panel:website:create', $params) !== 0) {
+        if ($current_url !== $url) {
+            $command = 'panel:website:rename';
+            $params = ['domain' => $current_url, 'new_domain' => $url];
+        } else {
+            $command = 'panel:website:create';
+            $params = ['domain' => $url, 'server' => $request->type];
+        }
+        if (Artisan::call($command, $params) !== 0) {
             DB::rollBack();
 
             return back()->withInput()->withErrors(['url' => trim(Artisan::output())]);
