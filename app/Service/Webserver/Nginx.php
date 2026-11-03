@@ -43,6 +43,18 @@ class Nginx
     }
 
     /**
+     * Domain of a site that can be enabled or disabled, null when it is not possible
+     */
+    public function getSiteDomain(string $site): ?string
+    {
+        if (! str_ends_with($site, '.conf') || ! is_dir($this->getPath().'/sites-available')) {
+            return null;
+        }
+
+        return basename($site, '.conf');
+    }
+
+    /**
      * Enable or disable a website by adding or removing its sites-enabled link
      *
      * @return string|null error message

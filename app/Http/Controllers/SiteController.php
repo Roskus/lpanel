@@ -24,8 +24,8 @@ class SiteController extends MainController
         $data['websites'] = array_merge(
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'enabled'], $apacheEnabled),
             array_map(fn($site) => ['url' => $site, 'type' => 'Apache', 'status' => 'available'], array_diff($apacheAvailable, $apacheEnabled)),
-            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled', 'domain' => basename($site, '.conf')], $nginxEnabled),
-            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available', 'domain' => basename($site, '.conf')], array_diff($nginxAvailable, $nginxEnabled))
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'enabled', 'domain' => $nginxService->getSiteDomain($site)], $nginxEnabled),
+            array_map(fn($site) => ['url' => $site, 'type' => 'Nginx', 'status' => 'available', 'domain' => $nginxService->getSiteDomain($site)], array_diff($nginxAvailable, $nginxEnabled))
         );
 
         return view('site.index', $data);
@@ -65,7 +65,7 @@ class SiteController extends MainController
         DB::beginTransaction();
 
         if (empty($request->id)) {
-            $website = Website::where('url', $url)->first();
+            $website = Website::withTrashed()->where('url', $url)->first();
             if (!$website) {
                 $website = new Website;
                 $website->created_at = now();

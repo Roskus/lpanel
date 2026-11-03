@@ -108,6 +108,23 @@ class WebsiteStateTest extends TestCase
     }
 
     #[Test]
+    public function buttonsAreHiddenForSitesThatCannotChangeState(): void
+    {
+        $path = config('app.webserver_path').'/nginx';
+        File::put("$path/sites-available/default", '');
+        $this->actingAs(User::factory()->create(['lang' => 'en']));
+
+        $this->get('/site')->assertOk()->assertDontSee('value="default"', false);
+
+        File::deleteDirectory("$path/sites-available");
+        File::deleteDirectory("$path/sites-enabled");
+        File::makeDirectory("$path/conf.d");
+        File::put("$path/conf.d/".self::DOMAIN.'.conf', '');
+
+        $this->get('/site')->assertOk()->assertSee(self::DOMAIN)->assertDontSee('/site/disable');
+    }
+
+    #[Test]
     public function errorIsShownInTheWebsitesList(): void
     {
         $this->actingAs(User::factory()->create(['lang' => 'en']));

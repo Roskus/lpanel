@@ -54,7 +54,8 @@ cert: ## Generate a self-signed SSL certificate
 	chmod 600 $(SSL_PATH)/private/$(SSL_DOMAIN).key
 
 permissions: ## Fix the folders php-fpm writes to, the containers must be running
-	docker compose exec -T php chown -R www-data:www-data storage bootstrap/cache /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
-	docker compose exec -T php chmod -R ug+rwX storage bootstrap/cache /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
+	docker compose exec -T php chmod -R a+rwX storage bootstrap/cache
+	docker compose exec -T php chown -R www-data:www-data /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
+	docker compose exec -T php chmod -R ug+rwX /etc/nginx/conf.d /etc/nginx/sites-available /etc/nginx/sites-enabled
 	docker compose exec -T php chown www-data:www-data /var/www
 	docker compose exec -T php find /var/www -mindepth 1 -maxdepth 1 ! -name lpanel -exec chown -R www-data:www-data {} +

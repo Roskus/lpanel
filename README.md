@@ -117,10 +117,7 @@ The virtual host is written to `sites-available` and enabled in `sites-enabled`,
 
 Websites listen on HTTPS when `WEBSITE_SSL_CERTIFICATE` and `WEBSITE_SSL_CERTIFICATE_KEY` are set, otherwise only on HTTP. Docker uses the certificate from `make cert`. The configuration is checked with `nginx -t` and nginx is reloaded, if the check fails the previous state is restored.
 
-Outside docker the php-fpm user needs permission to do it, add this line to `/etc/sudoers.d/lpanel`
-```terminal
-www-data ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /usr/sbin/nginx -s reload
-```
+> **Warning:** this flow is only meant for the docker environment. Outside docker do not give `www-data` sudo access to nginx while it can write the nginx configuration: PHP code from any hosted website could use it to get root access.
 
 ### Disable or enable a website
 

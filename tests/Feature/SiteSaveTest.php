@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Process;
@@ -71,6 +72,24 @@ class SiteSaveTest extends TestCase
             'url' => self::DOMAIN,
             'alias' => '["www.test-website.localhost","other.localhost"]',
         ]);
+    }
+
+    #[Test]
+    public function deletedWebsiteIsRestoredWithTheNewAliases(): void
+    {
+        File::makeDirectory("{$this->webserverPath}/nginx/conf.d");
+        $this->post('/site/save', ['url' => self::DOMAIN, 'type' => 'nginx', 'alias' => 'old.localhost']);
+        Website::where('url', self::DOMAIN)->first()->delete();
+
+        $this->post('/site/save', ['url' => self::DOMAIN, 'type' => 'nginx', 'alias' => 'new.localhost'])
+            ->assertRedirect('/site');
+
+        $this->assertDatabaseCount('website', 1);
+        $this->assertNotSoftDeleted('website', ['url' => self::DOMAIN, 'alias' => '["new.localhost"]']);
+        $this->assertStringContainsString(
+            'server_name '.self::DOMAIN.' new.localhost;',
+            File::get("{$this->webserverPath}/nginx/conf.d/".self::DOMAIN.'.conf')
+        );
     }
 
     #[Test]
