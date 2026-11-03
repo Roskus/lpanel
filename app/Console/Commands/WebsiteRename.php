@@ -76,31 +76,40 @@ class WebsiteRename extends Command
 
         $was_enabled = $links_path !== null && is_link("$links_path/$domain.conf");
 
-        // The running config is untouched until the regenerated vhost reloads
-        foreach ($moves as [$source, $destination]) {
-            if (file_exists($source)) {
-                rename($source, $destination);
+        // Each completed step adds how to undo it, the running config is untouched until the reload
+        $undo = [];
+
+        try {
+            foreach ($moves as [$source, $destination]) {
+                if (file_exists($source)) {
+                    rename($source, $destination);
+                    $undo[] = fn () => rename($destination, $source);
+                }
             }
-        }
-        if ($was_enabled) {
-            unlink("$links_path/$domain.conf");
-            symlink($moves[0][1], "$links_path/$new_domain.conf");
-        }
-
-        $website->url = $new_domain;
-        $website->save();
-
-        if ($this->call('panel:website:create', ['domain' => $new_domain, 'server' => $website->type]) !== self::SUCCESS) {
-            $website->url = $domain;
-            $website->save();
 
             if ($was_enabled) {
-                unlink("$links_path/$new_domain.conf");
-                symlink($moves[0][0], "$links_path/$domain.conf");
+                unlink("$links_path/$domain.conf");
+                $undo[] = fn () => symlink($moves[0][0], "$links_path/$domain.conf");
+                symlink($moves[0][1], "$links_path/$new_domain.conf");
+                $undo[] = fn () => unlink("$links_path/$new_domain.conf");
             }
-            foreach ($moves as [$source, $destination]) {
-                if (file_exists($destination)) {
-                    rename($destination, $source);
+
+            $website->url = $new_domain;
+            $website->save();
+            $undo[] = fn () => $website->forceFill(['url' => $domain])->save();
+
+            $created = $this->call('panel:website:create', ['domain' => $new_domain, 'server' => $website->type]) === self::SUCCESS;
+        } catch (\Throwable $th) {
+            $this->error("Error renaming website: {$th->getMessage()}");
+            $created = false;
+        }
+
+        if (! $created) {
+            foreach (array_reverse($undo) as $step) {
+                try {
+                    $step();
+                } catch (\Throwable $th) {
+                    $this->error("Error restoring website $domain: {$th->getMessage()}");
                 }
             }
 

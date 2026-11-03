@@ -238,6 +238,29 @@ class SiteSaveTest extends TestCase
         $this->assertDirectoryDoesNotExist("{$this->webserverPath}/www/renamed.localhost");
     }
 
+    #[Test]
+    public function renameIsUndoneWhenAFilesystemStepFails(): void
+    {
+        $nginx = $this->useSitesEnabled();
+        $this->post('/site/save', ['url' => self::DOMAIN, 'type' => 'nginx']);
+        $id = Website::where('url', self::DOMAIN)->value('id');
+        // A stale link makes symlink() fail once the vhost and folder are already moved
+        symlink('/nonexistent.conf', "$nginx/sites-enabled/renamed.localhost.conf");
+
+        $this->post('/site/save', ['id' => $id, 'url' => 'renamed.localhost', 'type' => 'nginx'])
+            ->assertSessionHasErrors('url');
+
+        $this->assertDatabaseHas('website', ['id' => $id, 'url' => self::DOMAIN]);
+        $this->assertFileExists("$nginx/sites-available/".self::DOMAIN.'.conf');
+        $this->assertSame(
+            "$nginx/sites-available/".self::DOMAIN.'.conf',
+            readlink("$nginx/sites-enabled/".self::DOMAIN.'.conf')
+        );
+        $this->assertFileDoesNotExist("$nginx/sites-available/renamed.localhost.conf");
+        $this->assertDirectoryExists("{$this->webserverPath}/www/".self::DOMAIN.'/public');
+        $this->assertDirectoryDoesNotExist("{$this->webserverPath}/www/renamed.localhost");
+    }
+
     private function useSitesEnabled(): string
     {
         $nginx = "{$this->webserverPath}/nginx";

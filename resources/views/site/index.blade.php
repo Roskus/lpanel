@@ -46,19 +46,21 @@
                                         {{ ucfirst($site['status']) }}
                                     </span>
                                 </td>
-                                <td class="d-flex">
-                                    @if (!empty($site['id']))
-                                    <a href="/site/edit/{{ $site['id'] }}" class="btn btn-sm btn-primary mr-2">{{ __('Edit') }}</a>
-                                    @endif
-                                    @if (!empty($site['domain']))
-                                    <form method="post" action="/site/{{ $site['status'] === 'enabled' ? 'disable' : 'enable' }}">
-                                        @csrf
-                                        <input type="hidden" name="domain" value="{{ $site['domain'] }}">
-                                        <button type="submit" class="btn btn-sm {{ $site['status'] === 'enabled' ? 'btn-warning' : 'btn-success' }}">
-                                            {{ $site['status'] === 'enabled' ? __('Disable') : __('Enable') }}
-                                        </button>
-                                    </form>
-                                    @endif
+                                <td>
+                                    <div class="d-flex">
+                                        @if (!empty($site['id']))
+                                        <a href="/site/edit/{{ $site['id'] }}" class="btn btn-sm btn-primary mr-2">{{ __('Edit') }}</a>
+                                        @endif
+                                        @if (!empty($site['domain']))
+                                        <form method="post" action="/site/{{ $site['status'] === 'enabled' ? 'disable' : 'enable' }}">
+                                            @csrf
+                                            <input type="hidden" name="domain" value="{{ $site['domain'] }}">
+                                            <button type="submit" class="btn btn-sm {{ $site['status'] === 'enabled' ? 'btn-warning' : 'btn-success' }}">
+                                                {{ $site['status'] === 'enabled' ? __('Disable') : __('Enable') }}
+                                            </button>
+                                        </form>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
