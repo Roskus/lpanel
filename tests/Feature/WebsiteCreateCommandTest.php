@@ -30,6 +30,9 @@ class WebsiteCreateCommandTest extends TestCase
         config([
             'app.webserver_path' => $this->webserverPath,
             'app.websites_path' => "{$this->webserverPath}/www",
+            // The Docker environment configures a certificate for every website
+            'app.website_ssl_certificate' => null,
+            'app.website_ssl_certificate_key' => null,
         ]);
     }
 

@@ -115,8 +115,8 @@ class WebsiteCreate extends Command
         try {
             file_put_contents($destination, $template_content);
 
-            // Enable virtual host
-            if (is_dir($sites_available) && ! is_link($link)) {
+            // Enable new virtual hosts only, editing must keep a disabled website disabled
+            if (is_dir($sites_available) && $previous_content === null && ! $was_enabled) {
                 symlink($destination, $link);
             }
         } catch (\Throwable $th) {
@@ -151,7 +151,7 @@ class WebsiteCreate extends Command
         $website->deleted_at = null;
         $website->type = $server;
         $website->updated_at = now();
-        $website->status = Website::ACTIVE;
+        $website->status = ! is_dir($sites_available) || is_link($link) ? Website::ACTIVE : Website::INACTIVE;
         $website->save();
 
         $this->info('Virtual host created successfully');
