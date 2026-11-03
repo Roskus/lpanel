@@ -60,6 +60,12 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/phpinfo" target="_blank">
+            <i class="fas fa-fw fa-info-circle"></i>
+            <span>PHP Info</span>
+        </a>
+    </li>
     <!-- Nav Item - Users Collapse Menu -->
 
     <!-- Divider -->

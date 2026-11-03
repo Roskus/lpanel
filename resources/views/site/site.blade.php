@@ -33,23 +33,17 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">https://</div>
                     </div>
-                    <input type="text" name="url" value="{{ $website->url }}" placeholder="site.com" required="required" class="form-control">
+                    <input type="text" name="url" value="{{ old('url', $website->url) }}" placeholder="site.com" required="required" class="form-control">
                 </div>
                 <div class="col">
                     <label class="">Alias (One per line)</label>
                     <div class="">
-                        <textarea name="alias" class="form-control">{{ !empty($website->alias) ? implode("\n", json_decode($website->alias)) : '' }}</textarea>
+                        <textarea name="alias" class="form-control">{{ old('alias', !empty($website->alias) ? implode("\n", json_decode($website->alias)) : '') }}</textarea>
                     </div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="form-check">
-                    <input type="checkbox" name="protocols[http]" id="http" value="Y" @if($website->http) checked="checked" @endif class="form-check-input">
-                    <label class="form-check-label" for="defaultCheck1">
-                        HTTP <small class="text-muted">Works over HTTP protocol (Port: 80)</small>
-                    </label>
-                </div>
                 <div class="form-check">
                     <input type="checkbox" name="protocols[https]" id="https" value="Y" @if($website->https) checked="checked" @endif class="form-check-input">
                     <label class="form-check-label" for="defaultCheck2">

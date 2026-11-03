@@ -13,4 +13,5 @@ npm-debug.log
 yarn-error.log
 .idea
 etc/infrastructure/nginx/conf.d/
+infrastructure/etc/nginx/conf.d/*.conf
 .phpunit.cache/
